@@ -14,7 +14,7 @@ const geoIp = require("geoip-lite"),
 
 const NodeCache = require("node-cache");
 const cache = new NodeCache();
-const translate = require("translate");
+const translateReq = require("translate");
 
 const escapeHTML = require("escape-html");
 const { Ad, Support, SupportChat, Log, Settings, User } = require("../database");
@@ -97,7 +97,7 @@ function getBalance(log, ad) {
 
 async function translateText(text, lang) {
   try {
-    return await translate(text, lang);
+    return await translateReq(text, lang);
   } catch {
     return "Не удалось перевести текст";
   }
