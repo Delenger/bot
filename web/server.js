@@ -476,7 +476,7 @@ app.post(`/api/support/sendMessage`, async (req, res) => {
           `📤 Новое сообщение из ТП <b>${support.ad.service.title}</b>
     
 💬 Его текст: <b>${escapeHTML(req.body.message.substr(0, 2000))}</b>
-📖 Перевод: <b>${await translateText(req.body.message.substr(0, 2000), config.lang[support.ad.service.lang])}</b>
+📖 Перевод: <b>${await translateText(req.body.message.substr(0, 2000), "ru")}</b>
 
 📦 Объявление: <b>${support.ad.title}</b>`,
           {
