@@ -1,14 +1,14 @@
 module.exports = {
-  TOKEN: "5228300815:AAFi0I_4TrCh_rv2Ha4U0cjOvSioOPcJ_Y4",
-  BOT_LOGIN: "lcdp_ro_bot",
-  PORT: 80,
+  TOKEN: "5371476287:AAHW7opLJoIH5vQJrLg6r9uxUTXYx4FdClo",
+  BOT_LOGIN: "test1289378947123_bot",
+  PORT: 3000,
   database: {
-    database: "default_db",
-    username: "gen_user",
-    password: "xsna1jzai10",
+    database: "bot",
+    username: "root",
+    password: "",
   },
   lang: {
-    ae: "are",
+    ae: "ar",
     au: "en",
     cz: "cze",
     de: "de",

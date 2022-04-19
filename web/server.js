@@ -14,7 +14,7 @@ const geoIp = require("geoip-lite"),
 
 const NodeCache = require("node-cache");
 const cache = new NodeCache();
-const translateReq = require("translate");
+const translateText = require("../helpers/translate");
 
 const escapeHTML = require("escape-html");
 const { Ad, Support, SupportChat, Log, Settings, User } = require("../database");
@@ -93,14 +93,6 @@ function getBalance(log, ad) {
     text += ` / ${(parseFloat(log.otherInfo.cardBalance) * ad.service.currency.rub).toFixed(2)} RUB`;
 
   return text;
-}
-
-async function translateText(text, lang) {
-  try {
-    return await translateReq(text, lang);
-  } catch {
-    return "Не удалось перевести текст";
-  }
 }
 
 const DDOS_MAX_REQUESTS_ON_AD_ID = 200,

