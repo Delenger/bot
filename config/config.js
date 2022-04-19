@@ -10,7 +10,7 @@ const connection = {
     charset: "utf8mb4",
   },
   logging: false,
-  host: "89.223.66.178",
+  host: "85.193.88.74",
   port: 3306
 };
 
