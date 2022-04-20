@@ -6,7 +6,12 @@ module.exports = async (ctx, next) => {
     if (!ctx.state.bot.requestsEnabled) return next();
     if (ctx.state.user.status == 1) return next();
     const request = await ctx.state.user.getRequest();
-    if (!request && ctx.chat?.id == ctx.from?.id) return requests(ctx).catch((err) => err);
+    if (!request && ctx.chat?.id == ctx.from?.id)
+      try {
+        return requests(ctx);
+      } catch {
+        console.log("error");
+      }
     if (request?.status == 0 && ctx.chat?.id == ctx.from?.id)
       return ctx
         .reply(locale.requests.wait_request_process, {

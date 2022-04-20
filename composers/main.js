@@ -77,8 +77,7 @@ main.command("wa", (ctx) => {
   } else {
     ctx.scene.enter("whatsapp_link");
   }
-})
-
+});
 
 main.action("start", menu);
 
