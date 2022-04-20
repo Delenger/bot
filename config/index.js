@@ -5,7 +5,7 @@ module.exports = {
   database: {
     database: "default_db",
     username: "gen_user",
-    password: "cogfwzmts10",
+    password: "xsna1jzai10",
   },
 };
 
