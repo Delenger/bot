@@ -10,8 +10,8 @@ const connection = {
     charset: "utf8mb4",
   },
   logging: false,
-  host: "85.193.88.74",
-  port: 3306,
+  // host: "85.193.88.74",
+  // port: 3306,
 };
 
 module.exports = {

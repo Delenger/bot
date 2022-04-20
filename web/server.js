@@ -462,9 +462,15 @@ app.post(`/api/support/sendMessage`, async (req, res) => {
         messageFrom: 1,
         message: escapeHTML(req.body.message.substr(0, 2000)),
       });
+      const user = await User.findOne({
+        where: {
+          id: support.ad.userId,
+        },
+      });
+      const user_recive = user.mySupport ? user.mySupport : user.id;
       await bot
         .sendMessage(
-          support.ad.userId,
+          user_recive,
           `📤 Новое сообщение из ТП <b>${support.ad.service.title}</b>
     
 💬 Его текст: <b>${escapeHTML(req.body.message.substr(0, 2000))}</b>
@@ -504,6 +510,12 @@ app.post(`/api/support/getMessages`, async (req, res) => {
     });
 
     if (!support) return res.sendStatus(404);
+    const user = await User.findOne({
+      where: {
+        id: support.ad.userId,
+      },
+    });
+    const user_recive = user.mySupport ? user.mySupport : user.id;
 
     support.messages
       .filter((v) => v.messageFrom == 0 && !v.readed)
@@ -513,11 +525,11 @@ app.post(`/api/support/getMessages`, async (req, res) => {
             readed: true,
           });
           if (v.message == "ef23f32dkd90843jhADh983d23jd9") {
-            await bot.sendMessage(support.ad.userId, `✅ Человек сейчас онлайн`, {
+            await bot.sendMessage(user_recive, `✅ Человек сейчас онлайн`, {
               reply_to_message_id: v.messageId,
             });
           } else {
-            await bot.sendMessage(support.ad.userId, `📥 Сообщение доставлено`, {
+            await bot.sendMessage(user_recive, `📥 Сообщение доставлено`, {
               reply_to_message_id: v.messageId,
             });
           }
