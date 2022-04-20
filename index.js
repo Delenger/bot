@@ -66,5 +66,5 @@ bot.use(require("./composers/admin"));
 bot.launch();
 
 bot.catch((err) => {
-  bot.telegram.sendMessage(5022826128, "Error:\n\n" + err).catch((err) => err);
+  console.log(err);
 });
