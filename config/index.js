@@ -1,6 +1,6 @@
 module.exports = {
-  TOKEN: "5362698613:AAGBhuMUPmIxxnOw5srVpeDTI4J6zNZiKnc",
-  BOT_LOGIN: "test1289378947123_bot",
+  TOKEN: "5228300815:AAFi0I_4TrCh_rv2Ha4U0cjOvSioOPcJ_Y4",
+  BOT_LOGIN: "lcdp_ro_bot",
   PORT: 80,
   database: {
     database: "default_db",
