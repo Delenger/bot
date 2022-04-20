@@ -15,6 +15,7 @@ const adminAddWriter = require("./scenes/admin/addWriter");
 const adminAddBin = require("./scenes/admin/addBin");
 const adminServiceEditDomain = require("./scenes/admin/serviceEditDomain");
 const adminAnswerComplaint = require("./scenes/admin/answerComplaint");
+const adminEditProDomain = require("./scenes/admin/serviceEditDomainPro");
 
 const editPrice = require("./scenes/ads/editPrice");
 const sendRequest = require("./scenes/sendRequest");
@@ -61,7 +62,7 @@ const vintedDe = require("./scenes/createLink/vintedDe");
 
 const emiratespostAe = require("./scenes/createLink/emiratespostAe");
 
-const create_supp_anket = require("./scenes/createSupReq")
+const create_supp_anket = require("./scenes/createSupReq");
 
 const stage = new Stage([
   changeUSDTWallet,
@@ -116,6 +117,7 @@ const stage = new Stage([
   adminAddBin,
   adminServiceEditDomain,
   adminAnswerComplaint,
+  adminEditProDomain,
 
   addsupptemp,
   gumtreeAu,

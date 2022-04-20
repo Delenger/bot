@@ -153,6 +153,12 @@ adminBot.action(/^admin_service_([A-Za-z0-9_]+)_edit_domain$/, (ctx) =>
     id: ctx.match[1],
   })
 );
+
+adminBot.action(/^admin_service_([A-Za-z0-9_]+)_edit_domain_pro$/, (ctx) =>
+  ctx.scene.enter("admin_service_edit_domain_pro", {
+    id: ctx.match[1],
+  })
+);
 adminBot.action(/^admin_service_([A-Za-z0-9_]+)_(show|hide)$/, async (ctx) => {
   try {
     const service_ = await Service.findByPk(ctx.match[1]);
@@ -506,7 +512,7 @@ adminBot.action(/^admin_user_(\d+)_edit_status$/, (ctx) => {
       reply_markup: Markup.inlineKeyboard([
         [Markup.callbackButton(locale.roles.admin, `admin_user_${ctx.match[1]}_set_status_admin`)],
         [Markup.callbackButton(locale.roles.pro, `admin_user_${ctx.match[1]}_set_status_pro`)],
-        [Markup.callbackButton(locale.roles.writer, `admin_user_${ctx.match[1]}_set_status_writer`),],
+        [Markup.callbackButton(locale.roles.writer, `admin_user_${ctx.match[1]}_set_status_writer`)],
         [Markup.callbackButton(locale.roles.worker, `admin_user_${ctx.match[1]}_set_status_worker`)],
         [Markup.callbackButton(locale.go_back, `admin_user_${ctx.match[1]}`)],
       ]),
@@ -984,7 +990,7 @@ adminBot.action(/^take_log_(\d+)$/, async (ctx) => {
   }
 });
 
-adminBot.action(/^admin_mentor_anket_(\d+)$/, (ctx) => { 
+adminBot.action(/^admin_mentor_anket_(\d+)$/, (ctx) => {
   return mentorAnket(ctx, ctx.match[1], true);
 });
 

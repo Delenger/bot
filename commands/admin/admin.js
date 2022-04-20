@@ -1,12 +1,5 @@
 const { Markup } = require("telegraf");
-const {
-  User,
-  Service,
-  Country,
-  Request,
-  Profit,
-  Ad,
-} = require("../../database");
+const { User, Service, Country, Request, Profit, Ad } = require("../../database");
 
 module.exports = async (ctx) => {
   try {
@@ -73,22 +66,10 @@ module.exports = async (ctx) => {
               Markup.callbackButton("📨 Отправить рассылку", "admin_send_mail"),
               Markup.callbackButton("👥 Пользователи", "admin_users_1"),
             ],
-            [
-              Markup.callbackButton("🌍 Страны", "admin_countries_1"),
-              Markup.callbackButton("📦 Сервисы", "admin_services_1"),
-            ],
-            [
-              Markup.callbackButton("🛍 Объявления", "admin_ads_1"),
-              Markup.callbackButton("💰 Профиты", "admin_profits_1"),
-            ],
-            [
-              Markup.callbackButton("📰 Заявки", "admin_requests_1"),
-              Markup.callbackButton("💳 Кастомные БИНы", "admin_bins_1"),
-            ],
-            [
-              Markup.callbackButton("✍️ Вбиверы", "admin_writers_1"),
-              Markup.callbackButton("⚙️ Настройки", "admin_settings"),
-            ],
+            [Markup.callbackButton("🌍 Страны", "admin_countries_1"), Markup.callbackButton("📦 Сервисы", "admin_services_1")],
+            [Markup.callbackButton("🛍 Объявления", "admin_ads_1"), Markup.callbackButton("💰 Профиты", "admin_profits_1")],
+            [Markup.callbackButton("📰 Заявки", "admin_requests_1"), Markup.callbackButton("💳 Кастомные БИНы", "admin_bins_1")],
+            [Markup.callbackButton("✍️ Вбиверы", "admin_writers_1"), Markup.callbackButton("⚙️ Настройки", "admin_settings")],
             [Markup.callbackButton("📖 Команды", "admin_help")],
           ]),
         }
