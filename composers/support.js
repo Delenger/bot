@@ -1,14 +1,5 @@
-const {
-  Composer,
-  Markup
-} = require("telegraf");
-const {
-  Country,
-  SupportTemplate,
-  SupportChat,
-  SupportUser,
-  User
-} = require("../database");
+const { Composer, Markup } = require("telegraf");
+const { Country, SupportTemplate, SupportChat, SupportUser, User } = require("../database");
 const chunk = require("chunk");
 const locale = require("../locale");
 
@@ -18,25 +9,30 @@ support.action("support_inst", async (ctx) => {
   let button = [];
   if (ctx.state.user.status != 0) {
     const requestSupp = await SupportUser.findOne({
-      order: [
-        ["id", "asc"]
-      ],
+      order: [["id", "asc"]],
       where: {
         status: 1,
-        userId: ctx.from.id
+        userId: ctx.from.id,
       },
     });
     if (requestSupp) {
-      button = [Markup.callbackButton("Удалить анкету", "support_delete_anket")]
+      button = [Markup.callbackButton("Удалить анкету", "support_delete_anket")];
     } else {
-      button = [Markup.callbackButton("Создать анкету", "support_create_anket")]
+      button = [Markup.callbackButton("Создать анкету", "support_create_anket")];
     }
   }
   ctx.replyOrEdit(
-    `🚀 Система Технической поддежки поможет зарабатывать тебе твой первый кэш!
-🧨 Совсем новенький и чувствуешь себя неуверенно в этой сфере ?  Просто заведи человека на ссылку-а мы сделаем всё за тебя`, {
+    `👨‍💻 Система Технической поддежки поможет тебе начать зарабатывать твои первые деньги!
+🧨 Совсем новенький и чувствуешь себя неуверенно в этой сфере ?  Ничего страшного. Просто заведи человека на ссылку, а человек с огромным опытом сделает всё за тебя
+📖 Так же ты можешь добавить свои шаблоны, чтобы удобно и быстро отвечать в боте`,
+    {
       reply_markup: Markup.inlineKeyboard([
-        [ctx.state.user.mySupport ? Markup.callbackButton("Убрать с тп", "support_kick") : Markup.callbackButton("Списки", "support_list"), Markup.callbackButton("📖 Шаблоны", "support_temp")],
+        [
+          ctx.state.user.mySupport
+            ? Markup.callbackButton("Убрать с тп", "support_kick")
+            : Markup.callbackButton("Списки", "support_list"),
+          Markup.callbackButton("📖 Шаблоны", "support_temp"),
+        ],
         button,
         [Markup.callbackButton(locale.go_back, "instruments")],
       ]),
@@ -45,7 +41,7 @@ support.action("support_inst", async (ctx) => {
 });
 
 support.action("support_temp", (ctx) => {
-  ctx.replyOrEdit(`🚀 Здесь вы можете удалять/добавлять новые шаблоны для ТЕХПОДДЕРЖКИ`, {
+  ctx.replyOrEdit(`📖 Здесь вы можете удалять/добавлять новые шаблоны для Технической Поддержки`, {
     reply_markup: Markup.inlineKeyboard([
       [Markup.callbackButton("📖 Шаблоны", "support_temp_list"), Markup.callbackButton("📖 Добавить Шаблон", "support_add_temp")],
     ]),
@@ -54,9 +50,7 @@ support.action("support_temp", (ctx) => {
 
 support.action("support_add_temp", async (ctx) => {
   const countries = await Country.findAll({
-    order: [
-      ["id", "asc"]
-    ],
+    order: [["id", "asc"]],
     where: {
       status: 1,
     },
@@ -70,9 +64,7 @@ support.action("support_add_temp", async (ctx) => {
 
 support.action("support_temp_list", async (ctx) => {
   const countries = await Country.findAll({
-    order: [
-      ["id", "asc"]
-    ],
+    order: [["id", "asc"]],
     where: {
       status: 1,
     },
@@ -86,23 +78,24 @@ support.action("support_temp_list", async (ctx) => {
 
 support.action("support_list", async (ctx) => {
   const requestSupp = await SupportUser.findAll({
-    order: [
-      ["id", "asc"]
-    ],
+    order: [["id", "asc"]],
     where: {
       status: 1,
     },
   });
   if (requestSupp.length > 0) {
     requestSupp.forEach((temp) => {
-      ctx.replyWithHTML(`📰 <b>Анкета ТП</b>
+      ctx.replyWithHTML(
+        `📰 <b>Анкета ТП</b>
 
 👑 <b>@${temp.username}</b>
 📉 <b>Процент: 4%</b>
 📝 <b>Описание:</b>
-${temp.text}`, {
-        reply_markup: Markup.inlineKeyboard([Markup.callbackButton("Взять", "set_my_support:" + temp.userId)]),
-      });
+${temp.text}`,
+        {
+          reply_markup: Markup.inlineKeyboard([Markup.callbackButton("Взять", "set_my_support:" + temp.userId)]),
+        }
+      );
     });
   } else {
     ctx.replyOrEdit("❌ <b>Ошибка, пока что нет анкет</b>", {
@@ -119,23 +112,19 @@ support.action("support_create_anket", (ctx) => {
 support.action("support_delete_anket", async (ctx) => {
   try {
     const requestSupp = await SupportUser.findOne({
-      order: [
-        ["id", "asc"]
-      ],
+      order: [["id", "asc"]],
       where: {
         status: 1,
-        userId: ctx.from.id
+        userId: ctx.from.id,
       },
     });
     if (requestSupp) {
       await requestSupp.update({
-        status: 0
+        status: 0,
       });
       ctx.replyOrEdit("❌ Ваша анкета была удалена", {
-        reply_markup: Markup.inlineKeyboard([
-          [Markup.callbackButton(locale.go_back, "support_inst")],
-        ]),
-      })
+        reply_markup: Markup.inlineKeyboard([[Markup.callbackButton(locale.go_back, "support_inst")]]),
+      });
     } else {
       return ctx.reply("❌ Ошибка, анкета не найдена");
     }
@@ -147,28 +136,30 @@ support.action("support_delete_anket", async (ctx) => {
 support.action("support_kick", async (ctx) => {
   try {
     if (ctx.state.user.mySupport) {
-      ctx.telegram.sendMessage(ctx.state.user.mySupport, `От вашего тп отказался <b><a href="tg://user?id=${ctx.from.id}">${ctx.from.username}</a></b>`, {
-        parse_mode: "HTML"
-      });
+      ctx.telegram.sendMessage(
+        ctx.state.user.mySupport,
+        `От вашего тп отказался <b><a href="tg://user?id=${ctx.from.id}">${ctx.from.username}</a></b>`,
+        {
+          parse_mode: "HTML",
+        }
+      );
       const user = await User.findOne({
         where: {
           id: ctx.from.id,
         },
       });
       await user.update({
-        mySupport: 0
+        mySupport: 0,
       });
       ctx.replyOrEdit(`✅ <b>Вы успешно отказались от саппорта</b>`, {
         parse_mode: "HTML",
-        reply_markup: Markup.inlineKeyboard([
-          [Markup.callbackButton(locale.go_back, "support_inst")],
-        ]),
-      })
+        reply_markup: Markup.inlineKeyboard([[Markup.callbackButton(locale.go_back, "support_inst")]]),
+      });
     } else {
-      ctx.reply("У тебя нет человека на тп")
+      ctx.reply("У тебя нет человека на тп");
     }
   } catch {
-    ctx.reply("❌ Ошибка")
+    ctx.reply("❌ Ошибка");
   }
 });
 
@@ -181,24 +172,26 @@ support.action(/set_my_support:(\d+)/, async (ctx) => {
     });
     if (user.id != ctx.match[1]) {
       await user.update({
-        mySupport: ctx.match[1]
+        mySupport: ctx.match[1],
       });
       ctx.replyOrEdit(`✅ <b>Вы успешно взяли саппорта</b>`, {
         parse_mode: "HTML",
-        reply_markup: Markup.inlineKeyboard([
-          [Markup.callbackButton(locale.go_back, "support_inst")],
-        ]),
+        reply_markup: Markup.inlineKeyboard([[Markup.callbackButton(locale.go_back, "support_inst")]]),
       });
-      ctx.telegram.sendMessage(ctx.match[1], `<b><a href="tg://user?id=${ctx.from.id}">${ctx.from.username}</a></b> взял вас в роли саппорта`, {
-        parse_mode: "HTML"
-      });
+      ctx.telegram.sendMessage(
+        ctx.match[1],
+        `<b><a href="tg://user?id=${ctx.from.id}">${ctx.from.username}</a></b> взял вас в роли саппорта`,
+        {
+          parse_mode: "HTML",
+        }
+      );
     } else {
       ctx.reply("Вы не можете взять свою анкету");
     }
   } catch {
-    ctx.reply("❌ Ошибка")
+    ctx.reply("❌ Ошибка");
   }
-})
+});
 
 support.action(/add_temp_supp_([a-z]{2,3})/, async (ctx) => {
   ctx.scene.enter("add_temp_supp", {
@@ -208,9 +201,7 @@ support.action(/add_temp_supp_([a-z]{2,3})/, async (ctx) => {
 
 support.action(/get_temp_supp_([a-z]{2,3})/, async (ctx) => {
   const template = await SupportTemplate.findAll({
-    order: [
-      ["id", "asc"]
-    ],
+    order: [["id", "asc"]],
     where: {
       status: 1,
       userID: ctx.from.id,
@@ -251,13 +242,9 @@ support.action(/delete_supp_temp_([0-9]+)/, async (ctx) => {
 
 support.action(/^get_all_temp_country:([a-z]+)_sup:([0-9]+)$/, async (ctx) => {
   try {
-    var button = [
-      [Markup.callbackButton("✍️ Отправить сообщение в ТП", `support_${ctx.match[2]}_send_message`)]
-    ];
+    var button = [[Markup.callbackButton("✍️ Отправить сообщение в ТП", `support_${ctx.match[2]}_send_message`)]];
     const template = await SupportTemplate.findAll({
-      order: [
-        ["id", "asc"]
-      ],
+      order: [["id", "asc"]],
       where: {
         status: 1,
         userID: ctx.from.id,
@@ -314,6 +301,5 @@ support.action(/^support_check_(\d+)_online$/, async (ctx) => {
 
   ctx.answerCbQuery("♻️ Проверяем онлайн...");
 });
-
 
 module.exports = support;

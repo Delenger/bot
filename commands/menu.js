@@ -17,25 +17,19 @@ module.exports = async (ctx) => {
           where: { userId: ctx.from.id },
         })
       );
-      if (!profitsSum) {
-        profitsSum = 0;
-      }
-      adsCount = await Ad.count({
-        where: {
-          userId: ctx.from.id,
-        },
-      }),
-      daysWithUs = moment().diff(moment(ctx.state.user.createdAt), "days"),
-      hoursWithUs = moment().diff(moment(ctx.state.user.createdAt), "hours"),
-      minutesWithUs = moment().diff(
-        moment(ctx.state.user.createdAt),
-        "minutes"
-      ),
-      secondsWithUs = moment().diff(
-        moment(ctx.state.user.createdAt),
-        "seconds"
-      );
-    
+    if (!profitsSum) {
+      profitsSum = 0;
+    }
+    (adsCount = await Ad.count({
+      where: {
+        userId: ctx.from.id,
+      },
+    })),
+      (daysWithUs = moment().diff(moment(ctx.state.user.createdAt), "days")),
+      (hoursWithUs = moment().diff(moment(ctx.state.user.createdAt), "hours")),
+      (minutesWithUs = moment().diff(moment(ctx.state.user.createdAt), "minutes")),
+      (secondsWithUs = moment().diff(moment(ctx.state.user.createdAt), "seconds"));
+
     const user = await User.findByPk(ctx.from.id);
 
     let USDTWallet = user.USDTWallet ? user.USDTWallet : "Не установлен";
@@ -64,11 +58,11 @@ module.exports = async (ctx) => {
       });
     }
     if (user.status === 3) {
-      toPro = "-"
+      toPro = "-";
     } else if (profitsSum < 250000) {
-      toPro = `${250000 - profitsSum} RUB`
+      toPro = `${250000 - profitsSum} RUB`;
     } else {
-      toPro = "-"
+      toPro = "-";
     }
 
     withUsText = `${daysWithUs} ${declOfNum(daysWithUs, ["день", "дня", "дней"])}`;
@@ -97,13 +91,10 @@ module.exports = async (ctx) => {
       .replace("{my_support}", mySupport)
       .replace("{to_pro}", toPro)
       .replace("{with_us}", withUsText)
-      .replace(
-        "{hide_nick}",
-        ctx.state.user.hideNick ? "Скрыт 🔴" : "Виден 🟢"
-      );
+      .replace("{hide_nick}", ctx.state.user.hideNick ? "Скрыт 🔴" : "Виден 🟢");
 
     return ctx
-      .replyWithPhoto("https://i.scdn.co/image/ab67706c0000bebb656aa67be7db302873a5f2f7", {
+      .replyWithPhoto("https://i.pinimg.com/originals/70/37/2d/70372d1c3c998ee77ab87f4fde2c82e0.png", {
         caption: text,
         parse_mode: "HTML",
         // reply_markup: Markup.inlineKeyboard([

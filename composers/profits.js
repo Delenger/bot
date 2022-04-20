@@ -31,19 +31,20 @@ composer.command("kassa", async (ctx) => {
     kassa = !kassa ? 0 : kassa;
     kassa_today = !kassa_today ? 0 : kassa_today;
 
-    return ctx.replyWithPhoto("https://i.pinimg.com/originals/dc/4c/31/dc4c31949911d1bd73db390bb62641c2.jpg",
-        {
-          caption: `💰 Сегодняшняя касса: <b>${parseFloat(kassa_today).toFixed(2)} RUB</b>`,
-          parse_mode: "HTML",
-        }
-      )
-      .catch((err) => ctx.reply(
-        // 💸 Касса за всё время: <b>${parseFloat(kassa).toFixed(2)} RUB</b>
-        `💰 Сегодняшняя касса: <b>${parseFloat(kassa_today).toFixed(2)} RUB</b>`,
-        {
-          parse_mode: "HTML",
-        }
-      ));
+    return ctx
+      .replyWithPhoto("https://images.hdqwalls.com/download/2020-money-heist-ei-3840x2400.jpg", {
+        caption: `💰 Сегодняшняя касса: <b>${parseFloat(kassa_today).toFixed(2)} RUB</b>`,
+        parse_mode: "HTML",
+      })
+      .catch((err) =>
+        ctx.reply(
+          // 💸 Касса за всё время: <b>${parseFloat(kassa).toFixed(2)} RUB</b>
+          `💰 Сегодняшняя касса: <b>${parseFloat(kassa_today).toFixed(2)} RUB</b>`,
+          {
+            parse_mode: "HTML",
+          }
+        )
+      );
   } catch (err) {
     return ctx.reply("❌ Ошибка").catch((err) => err);
   }
@@ -64,19 +65,20 @@ composer.action("kassa", async (ctx) => {
     kassa = !kassa ? 0 : kassa;
     kassa_today = !kassa_today ? 0 : kassa_today;
 
-    return ctx.replyWithPhoto("https://i.pinimg.com/originals/dc/4c/31/dc4c31949911d1bd73db390bb62641c2.jpg",
-      {
+    return ctx
+      .replyWithPhoto("https://images.hdqwalls.com/download/2020-money-heist-ei-3840x2400.jpg", {
         caption: `💰 Сегодняшняя касса: <b>${parseFloat(kassa_today).toFixed(2)} RUB</b>`,
         parse_mode: "HTML",
-      }
-    )
-    .catch((err) => ctx.reply(
-      // 💸 Касса за всё время: <b>${parseFloat(kassa).toFixed(2)} RUB</b>
-      `💰 Сегодняшняя касса: <b>${parseFloat(kassa_today).toFixed(2)} RUB</b>`,
-      {
-        parse_mode: "HTML",
-      }
-    ));
+      })
+      .catch((err) =>
+        ctx.reply(
+          // 💸 Касса за всё время: <b>${parseFloat(kassa).toFixed(2)} RUB</b>
+          `💰 Сегодняшняя касса: <b>${parseFloat(kassa_today).toFixed(2)} RUB</b>`,
+          {
+            parse_mode: "HTML",
+          }
+        )
+      );
   } catch (err) {
     return ctx.reply("❌ Ошибка").catch((err) => err);
   }
