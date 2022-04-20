@@ -1,22 +1,11 @@
 module.exports = {
-  TOKEN: "5371476287:AAHW7opLJoIH5vQJrLg6r9uxUTXYx4FdClo",
+  TOKEN: "5362698613:AAGBhuMUPmIxxnOw5srVpeDTI4J6zNZiKnc",
   BOT_LOGIN: "test1289378947123_bot",
-  PORT: 3000,
+  PORT: 80,
   database: {
-    database: "bot",
-    username: "root",
-    password: "",
-  },
-  lang: {
-    ae: "ar",
-    au: "en",
-    cz: "cze",
-    de: "de",
-    es: "es",
-    it: "it",
-    pl: "pl",
-    ro: "ro",
-    uk: "en",
+    database: "default_db",
+    username: "gen_user",
+    password: "cogfwzmts10",
   },
 };
 
