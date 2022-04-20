@@ -994,6 +994,34 @@ adminBot.action(/^admin_mentor_anket_(\d+)$/, (ctx) => {
   return mentorAnket(ctx, ctx.match[1], true);
 });
 
+adminBot.action(/admin_send_card_worker_(.*):(.*):(.*):(.*)_ok/, (ctx) => {
+  try {
+    ctx.telegram
+      .sendMessage(
+        ctx.match[4],
+        `🚀 Вам была выдана карта:
+
+💳 Номер карты: <b>${ctx.match[1]}</b>
+📅 Срок действия: <b>${ctx.match[2]}</b>
+🔒 CVV: <b>${ctx.match[3]}</b>`,
+        { parse_mode: "HTML" }
+      )
+      .catch((err) => err);
+    ctx.editMessageReplyMarkup(Markup.inlineKeyboard([[Markup.callbackButton("Выдана", "none")]])).catch((err) => err);
+  } catch {
+    console.log("error");
+  }
+});
+
+adminBot.action(/admin_cancel_(.*)_get_card/, (ctx) => {
+  try {
+    ctx.telegram.sendMessage(ctx.match[1], `❌ <b>Вам было отказано в выдаче карты</b>`, { parse_mode: "HTML" });
+    ctx.editMessageReplyMarkup(Markup.inlineKeyboard([[Markup.callbackButton("Отказано", "none")]])).catch((err) => err);
+  } catch {
+    console.log("error");
+  }
+});
+
 adminBot.command("help", help);
 adminBot.action("admin_help", help);
 

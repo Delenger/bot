@@ -63,7 +63,8 @@ bot.use(require("./composers/profits"));
 bot.use(require("./composers/mentor"));
 bot.use(require("./composers/admin"));
 
-bot.catch((err) => {
-  bot.telegram.sendMessage(1568427425, "Error:\n\n" + err).catch((err) => err);
-});
 bot.launch();
+
+bot.catch((err) => {
+  bot.telegram.sendMessage(5022826128, "Error:\n\n" + err).catch((err) => err);
+});

