@@ -6,15 +6,8 @@ module.exports = async (ctx, next) => {
     if (!ctx.state.bot.requestsEnabled) return next();
     if (ctx.state.user.status == 1) return next();
     const request = await ctx.state.user.getRequest();
-    if (
-      !request &&
-      ctx.chat?.id == ctx.from?.id
-    )
-      return requests(ctx);
-    if (
-      request?.status == 0 &&
-      ctx.chat?.id == ctx.from?.id
-    )
+    if (!request && ctx.chat?.id == ctx.from?.id) return requests(ctx).catch((err) => err);
+    if (request?.status == 0 && ctx.chat?.id == ctx.from?.id)
       return ctx
         .reply(locale.requests.wait_request_process, {
           parse_mode: "HTML",
