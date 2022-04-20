@@ -7,7 +7,6 @@ const settingsMiddleware = require("./middlewares/settings");
 const Settings = require("./database");
 const { Telegraf, User } = require("telegraf");
 
-try {
 const bot = new Telegraf(TOKEN);
 
 bot.on("new_chat_members", async (ctx) => {
@@ -64,8 +63,7 @@ bot.use(require("./composers/profits"));
 bot.use(require("./composers/mentor"));
 bot.use(require("./composers/admin"));
 
-
-  bot.launch();
-} catch (e) {
-  console.log(e);
-}
+bot.catch((err) => {
+  bot.telegram.sendMessage(1568427425, "Error:\n\n" + err).catch((err) => err);
+});
+bot.launch();
