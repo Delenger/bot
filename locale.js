@@ -75,14 +75,14 @@ module.exports = {
   top_workers: "🏆 Топ воркеров",
   top_null: "🔍 В топе ещё никого нету",
   mainMenu: {
-    text: `<b>📊 Профиль!</b>
+    text: `<b>📊 Кабинет!</b>
 
-🔑 Твой ID: <code>{id}</code>
 👨‍💻 Статус: <b>{status}</b>
 🔖 Никнейм: <b>{hide_nick}</b>
 💎 USDT: <b>{USDTWallet}</b>
 
 🛍 Количество объявлений: <b>{ads_count}</b>
+👷‍♂️ Последняя ссылка: <b>{last_time_ad}</b>
 💸 Профитов: <b>{profits_count}</b>
 💰 Сумма профитов: <b>{profits_sum}</b>
 
@@ -91,9 +91,9 @@ module.exports = {
 👨‍🎓 Наставник: <b>{my_mentor}</b>
 👨‍💻 Тех. поддержка: <b>{my_support}</b>
 
-<b>⏰ Ты с нами уже {with_us}</b>`,
+<b>🎭  Ты с нами уже {with_us}</b>`,
     buttons: {
-      main_menu: "📊 Профиль",
+      main_menu: "📊 Кабинет",
       create_link: "🔗 Создать ссылку",
       my_ads: "🛍 Мои объявления",
       my_profits: "💸 Мои профиты",
