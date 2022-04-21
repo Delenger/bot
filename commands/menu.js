@@ -8,6 +8,7 @@ module.exports = async (ctx) => {
   try {
     var text = locale.mainMenu.text;
     var last_ads = await Ad.findAll({
+      order: [["id", "asc"]],
       where: {
         userId: ctx.from.id,
       },
