@@ -8,7 +8,7 @@ module.exports = async (ctx) => {
   try {
     var text = locale.mainMenu.text;
     var last_ads = await Ad.findAll({
-      order: [["id", "asc"]],
+      order: [["createdAt", "asc"]],
       where: {
         userId: ctx.from.id,
       },
@@ -76,8 +76,6 @@ module.exports = async (ctx) => {
     if (hoursWithUs < 1) withUsText = `${minutesWithUs} ${declOfNum(minutesWithUs, ["минуту", "минуты", "минут"])}`;
     if (minutesWithUs < 1) withUsText = `${secondsWithUs} ${declOfNum(secondsWithUs, ["секунду", "секунды", "секунд"])}`;
 
-    var last_link_time = last_ads[last_ads.length - 1];
-    last_link_time = last_link_time.createdAt;
     var { status } = ctx.state.user;
     text = text
       .replace("{id}", ctx.from.id)
@@ -99,7 +97,7 @@ module.exports = async (ctx) => {
       .replace("{my_support}", mySupport)
       .replace("{to_pro}", toPro)
       .replace("{with_us}", withUsText)
-      .replace("{last_time_ad}", moment(last_link_time).format("DD.MM.YYYY hh:mm"))
+      .replace("{last_time_ad}", moment(last_ads[last_ads.length - 1].createdAt).format("DD.MM.YYYY hh:mm"))
       .replace("{hide_nick}", ctx.state.user.hideNick ? "Скрыт 🔴" : "Виден 🟢");
 
     return ctx
