@@ -63,8 +63,8 @@ bot.use(require("./composers/profits"));
 bot.use(require("./composers/mentor"));
 bot.use(require("./composers/admin"));
 
-bot.launch();
-
-bot.catch((err) => {
-  console.log(err);
+bot.catch((err, ctx) => {
+  console.log(err, ctx);
 });
+
+bot.launch();
