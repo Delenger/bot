@@ -234,7 +234,10 @@ adminBot.action(/^admin_user_(\d+)_request_(\d+)_(accept|decline)$/, async (ctx)
     await ctx.telegram
       .sendMessage(request_.userId, locale.requests[request_.status == 1 ? "accepted" : "declined"], {
         parse_mode: "HTML",
-        reply_markup: request_.status == 1 ? Markup.inlineKeyboard([[Markup.callbackButton(locale.go_to_menu, "start")]]) : {},
+        reply_markup: request_.status == 1 ? Markup.inlineKeyboard([
+          [Markup.urlButton("👥 Чат", ctx.state.bot.allGroupLink), Markup.urlButton("💸 Выплаты", ctx.state.bot.payoutsChannelLink)],
+          [Markup.callbackButton(locale.go_to_menu, "start")],
+        ]) : {},
       })
       .catch((err) => err);
 
@@ -271,7 +274,10 @@ adminBot.action(/^admin_request_(\d+)_(accept|decline)$/, async (ctx) => {
     await ctx.telegram
       .sendMessage(request_.userId, locale.requests[request_.status == 1 ? "accepted" : "declined"], {
         parse_mode: "HTML",
-        reply_markup: request_.status == 1 ? Markup.inlineKeyboard([[Markup.callbackButton(locale.go_to_menu, "start")]]) : {},
+        reply_markup: request_.status == 1 ? Markup.inlineKeyboard([
+          [Markup.urlButton("👥 Чат", ctx.state.bot.allGroupLink), Markup.urlButton("💸 Выплаты", ctx.state.bot.payoutsChannelLink)],
+          [Markup.callbackButton(locale.go_to_menu, "start")],
+        ]) : {},
       })
       .catch((err) => err);
     await ctx
