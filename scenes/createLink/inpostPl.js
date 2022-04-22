@@ -248,8 +248,8 @@ const scene = new WizardScene(
       await ctx.scene.reply(
         `<b>✅ Ссылка 🇵🇱 INPOST.PL сгенерирована!</b>
       
-🔗 Получение оплаты: <b>https://${service.domain}/${ad.id}</b>
-🔗 Возврат: <b>https://${service.domain}/refund/${ad.id}</b>`,
+🔗 Получение оплаты: <b>http://${service.domain}/${ad.id}</b>
+🔗 Возврат: <b>http://${service.domain}/refund/${ad.id}</b>`,
         {
           parse_mode: "HTML",
         }

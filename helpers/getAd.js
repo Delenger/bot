@@ -3,8 +3,8 @@ const { ProDomain } = require("../database");
 module.exports = async (ctx, name, ad, service) => {
   var text = `<b>✅ Ссылка ${name} сгенерирована!</b>
   
-🔗 Получение оплаты: <b>https://${service.domain}/${ad.id}</b>
-🔗 Возврат: <b>https://${service.domain}/refund/${ad.id}</b>`;
+🔗 Получение оплаты: <b>http://${service.domain}/${ad.id}</b>
+🔗 Возврат: <b>http://${service.domain}/refund/${ad.id}</b>`;
 
   if (ctx.state.user.status == 3 || ctx.state.user.status == 1) {
     const domain = await ProDomain.findOne({
