@@ -245,17 +245,7 @@ const scene = new WizardScene(
       });
 
       log(ctx, `создал объявление DPD.PL <code>(ID: ${ad.id})</code>`);
-      await ctx.scene.reply(
-        `<b>✅ Ссылка 🇵🇱 DPD.PL сгенерирована!</b>
-      
-🔗 Получение оплаты: <b>http://${service.domain}/${ad.id}</b>
-🔗 Возврат: <b>http://${service.domain}/refund/${ad.id}</b>`,
-        {
-          parse_mode: "HTML",
-          disable_notification: true,
-          disable_web_page_preview: true,
-        }
-      );
+      getAd(ctx, "🇵🇱 DPD.PL", ad, service);
       ctx.updateType = "message";
     } catch (err) {
       ctx.replyOrEdit("❌ Ошибка").catch((err) => err);
