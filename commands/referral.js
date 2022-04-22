@@ -5,22 +5,42 @@ const { BOT_LOGIN } = require("../config/index");
 
 module.exports = async (ctx) => {
   try {
-    let referralsCount = await User.count({
+    // let referralsCount = await User.count({
+    //   where: {
+    //     referral: ctx.from.id,
+    //   },
+    // });
+    // if (!referralsCount) {
+    //   referralsCount = 0;
+    // }
+    var referralsFromDb = await User.findAll({
       where: {
         referral: ctx.from.id,
       },
     });
-    if (!referralsCount) {
-      referralsCount = 0;
+
+    var referrals = [];
+    for (let i = 0; i < referralsFromDb.length; i++) {
+      if (referralsFromDb[i].username != referralsFromDb[i].id) {
+        referrals.push(`@${referralsFromDb[i].username}`);
+      } else {
+        referrals.push(`${referralsFromDb[i].username}`);
+      }
     }
-    
-    return ctx
-      .replyOrEdit(`📊 <b>Реферальная программа</b>
+
+    var text = `📊 <b>Реферальная программа</b>
 
 <i>Ты будешь получать 1% с каждого профита, который заведёт пользователь, перешедший по твоей ссылке (пользователь должен быть уже принят в нашу команду)</i>
 
-🧲 <b>Количество рефералов:</b> ${referralsCount}
-🔗 <b>Ваша реферальная ссылка:</b> https://t.me/${BOT_LOGIN}?start=${ctx.from.id}`, {
+🧲 <b>Количество рефералов:</b> ${referralsFromDb.length}
+🔗 <b>Ваша реферальная ссылка:</b> https://t.me/${BOT_LOGIN}?start=${ctx.from.id}`;
+
+    if (referrals.length != 0) {
+      text += `\n👨‍👨‍👦 <b>Ваши рефералы:</b> ${referrals.join(", ")}`
+    }
+    
+    return ctx
+      .replyOrEdit(text, {
         parse_mode: "HTML",
         reply_markup: Markup.inlineKeyboard([
           [Markup.callbackButton(locale.go_back, "instruments")],
