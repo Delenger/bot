@@ -11,26 +11,15 @@ module.exports = async (ctx) => {
         ],
         [
           ...(ctx.state.user.status !== 0 && process.env.SMS_TOKEN
-            ? 
-              [
-                Markup.callbackButton(
-                  locale.instruments.send_sms,
-                  "send_sms"
-                ),
-              ]
+            ? [Markup.callbackButton(locale.instruments.send_sms, "send_sms")]
             : []),
           ...(ctx.state.user.status !== 0 && process.env.EMAIL_TOKEN
-            ? 
-              [
-                Markup.callbackButton(
-                  locale.instruments.send_email,
-                  "send_email"
-                ),
-              ]
+            ? [Markup.callbackButton(locale.instruments.send_email, "send_email")]
             : []),
         ],
         [
           Markup.callbackButton(locale.instruments.complaint, "complaint"),
+          Markup.callbackButton(locale.instruments.send_sms, "send_sms"),
         ],
         [
           Markup.callbackButton(locale.instruments.support, "support_inst"),
@@ -38,19 +27,13 @@ module.exports = async (ctx) => {
         ],
         [
           Markup.callbackButton(
-            ctx.state.user.hideNick
-              ? "🟢 Показывать никнейм"
-              : "🔴 Скрыть никнейм",
+            ctx.state.user.hideNick ? "🟢 Показывать никнейм" : "🔴 Скрыть никнейм",
             `settings_nickname_${ctx.state.user.hideNick ? "show" : "hide"}`
           ),
         ],
-        [
-          Markup.callbackButton(
-            "✏️ Изменить адрес USDT", "change_usdt_wallet"
-          ),
-        ],
+        [Markup.callbackButton("✏️ Изменить адрес USDT", "change_usdt_wallet")],
       ]),
       parse_mode: "HTML",
     })
-    .catch ((err) => ctx.reply("❌ Ошибка"));
+    .catch((err) => ctx.reply("❌ Ошибка"));
 };

