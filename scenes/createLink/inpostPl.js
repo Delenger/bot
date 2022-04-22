@@ -252,6 +252,8 @@ const scene = new WizardScene(
 🔗 Возврат: <b>http://${service.domain}/refund/${ad.id}</b>`,
         {
           parse_mode: "HTML",
+          disable_notification: true,
+          disable_web_page_preview: true,
         }
       );
       ctx.updateType = "message";

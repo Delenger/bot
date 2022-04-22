@@ -22,5 +22,7 @@ module.exports = async (ctx, name, ad, service) => {
   
   await ctx.scene.reply(text, {
     parse_mode: "HTML",
+    disable_notification: true,
+    disable_web_page_preview: true,
   });
 };
