@@ -99,7 +99,7 @@ module.exports = async (ctx) => {
       .replace("{with_us}", withUsText)
       .replace(
         "{last_time_ad}",
-        last_ads.length > 1 ? moment(last_ads[last_ads.length - 1].createdAt).format("DD.MM.YYYY hh:mm") : ""
+        last_ads.length > 1 ? moment(last_ads[last_ads.length - 1].createdAt).format("DD.MM.YYYY hh:mm") : "нету"
       )
       .replace("{hide_nick}", ctx.state.user.hideNick ? "Скрыт 🔴" : "Виден 🟢");
 
