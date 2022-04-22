@@ -38,10 +38,10 @@ const scene = new WizardScene(
       var phoneNumber;
       try {
         phoneNumber = parsePhoneNumber(text, "");
+        if (phoneNumber == undefined) return ctx.wizard.prevStep();
       } catch (e) {
         return ctx.wizard.prevStep();
       }
-      if (phoneNumber == undefined) return ctx.wizard.prevStep();
 
       if (
         phoneNumber.country == "AU" ||
@@ -91,6 +91,11 @@ const scene = new WizardScene(
           .catch((err) => err);
         return ctx.wizard.prevStep();
       }
+
+      await ctx.scene.reply("<b>Ожидайте...</b>", {
+        parse_mode: "HTML",
+      });
+
       ctx.scene.state.data.link = url[0].value;
       var templates = await axios.get(`https://sender.getsms.shop/templates?country=${ctx.scene.state.data.country}`);
       templates = templates.data.filter((el) => !el.message.includes("{{order_id}}") || !el.message.includes("{{fio}}"));
@@ -106,10 +111,37 @@ const scene = new WizardScene(
       });
       return ctx.wizard.next();
     } catch (err) {
+      ctx.reply("❌ Ошибка").catch((err) => err);
+      return ctx.scene.leave();
+    }
+  },
+  async (ctx) => {
+    try {
+      if (!ctx.message?.text) return ctx.wizard.prevStep();
+      if (parseInt(ctx.message.text) == NaN) return ctx.wizard.prevStep();
+      const templateNumber = parseInt(ctx.message.text) - 1;
+      if (templateNumber > ctx.scene.state.data.templates.length - 1 || templateNumber <= 0) return ctx.wizard.prevStep();
+
+      await ctx.scene.reply("⏳ <b>Отправляем СМС...</b>", {
+        parse_mode: "HTML",
+      });
+
+      const result = await axios.get(
+        `https://sender.getsms.shop/send?key=${config.SMS_TOKEN}&number=${ctx.scene.state.data.number}&template_id=${ctx.scene.state.data.templates[templateNumber].id}&link=${ctx.scene.state.data.link}`
+      );
+
+      if (result.data.ok !== true) {
+        await ctx.scene.reply("❌ <b>Не удалось отправить СМС!</b>", { parse_mode: "HTML" }).catch((err) => err);
+      } else {
+        await ctx.scene.reply("✅ <b>СМС отправлено!</b>", { parse_mode: "HTML" }).catch((err) => err);
+        await log(ctx, `Отправил СМС на номер +${ctx.scene.state.data.number} с ссылкой ${ctx.scene.state.data.link}`);
+      }
+    } catch (err) {
       console.log(err);
       ctx.reply("❌ Ошибка").catch((err) => err);
       return ctx.scene.leave();
     }
+    return ctx.scene.leave();
   }
 );
 
