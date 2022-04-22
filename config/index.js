@@ -1,12 +1,13 @@
 module.exports = {
-  TOKEN: "5228300815:AAFi0I_4TrCh_rv2Ha4U0cjOvSioOPcJ_Y4",
+  TOKEN: "5362698613:AAGBhuMUPmIxxnOw5srVpeDTI4J6zNZiKnc",
   BOT_LOGIN: "lcdp_ro_bot",
-  PORT: 80,
+  PORT: 8443,
   database: {
-    database: "default_db",
-    username: "gen_user",
-    password: "xsna1jzai10",
+    database: "bot",
+    username: "root",
+    password: "",
   },
+  SMS_TOKEN: "TjgCFeUdWPB6qca4d1KYdNZwv9gWnt",
 };
 
 // SMS_TOKEN="asd4as56d456as4d56sa456d"

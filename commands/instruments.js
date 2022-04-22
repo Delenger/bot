@@ -1,4 +1,5 @@
 const { Markup } = require("telegraf");
+const config = require("../config/index");
 const locale = require("../locale");
 
 module.exports = async (ctx) => {
@@ -10,16 +11,15 @@ module.exports = async (ctx) => {
           Markup.callbackButton(locale.instruments.mentors, "mentors"),
         ],
         [
-          ...(ctx.state.user.status !== 0 && process.env.SMS_TOKEN
+          ...(ctx.state.user.status !== 0 && config.SMS_TOKEN
             ? [Markup.callbackButton(locale.instruments.send_sms, "send_sms")]
             : []),
-          ...(ctx.state.user.status !== 0 && process.env.EMAIL_TOKEN
+          ...(ctx.state.user.status !== 0 && config.EMAIL_TOKEN
             ? [Markup.callbackButton(locale.instruments.send_email, "send_email")]
             : []),
         ],
         [
           Markup.callbackButton(locale.instruments.complaint, "complaint"),
-          Markup.callbackButton(locale.instruments.send_sms, "send_sms"),
         ],
         [
           Markup.callbackButton(locale.instruments.support, "support_inst"),
