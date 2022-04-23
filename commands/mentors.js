@@ -3,7 +3,7 @@ const locale = require("../locale");
 const { User } = require("../database");
 
 module.exports = async (ctx) => {
-  const user = await User.findByPk(ctx.from.id);
+  // const user = await User.findByPk(ctx.from.id);
   return ctx
     .replyOrEdit(
       `👨‍🎓 Система Наставников поможет тебе начать зарабатывать твои первые деньги!
@@ -15,7 +15,7 @@ module.exports = async (ctx) => {
         reply_markup: Markup.inlineKeyboard([
           [Markup.callbackButton(locale.mentors.mentors_list, "mentors_list")],
           [
-            ...(!user.myMentor || ctx.state.user.status === 1
+            ...(ctx.state.user.status === 1 //!user.myMentor || 
               ?  Markup.callbackButton(locale.mentors.change_mentor, "change_mentor")
               : []),
           ],
