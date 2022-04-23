@@ -22,7 +22,7 @@ module.exports = async (ctx, with_buttons = true) => {
       text += "</b>";
     });
     return ctx
-      .replyWithPhoto("https://i.pinimg.com/originals/70/37/2d/70372d1c3c998ee77ab87f4fde2c82e0.png", {
+      .replyWithPhoto("https://www.clementoni.com/media/prod/se/39545/la-casa-de-papel-panorama-1000-pcs-la-casa-de-papel_LWsmt5Q.jpg", {
         caption: text,
         parse_mode: "HTML",
         disable_notification: true,
