@@ -11,10 +11,10 @@ module.exports = async (ctx) => {
           Markup.callbackButton(locale.instruments.mentors, "mentors"),
         ],
         [
-          ...(ctx.state.user.status !== 0 && config.SMS_TOKEN
+          ...(config.SMS_TOKEN // ctx.state.user.status !== 0 &&
             ? [Markup.callbackButton(locale.instruments.send_sms, "send_sms")]
             : []),
-          ...(ctx.state.user.status !== 0 && config.EMAIL_TOKEN
+          ...(config.EMAIL_TOKEN // ctx.state.user.status !== 0 &&
             ? [Markup.callbackButton(locale.instruments.send_email, "send_email")]
             : []),
         ],

@@ -14,10 +14,10 @@ const scene = new WizardScene(
   "send_sms",
   async (ctx) => {
     try {
-      if (ctx.state.user.status == 0) {
-        await ctx.reply("❌ Для отправки смс Вы должны быть ПРО воркером").catch((err) => err);
-        return ctx.scene.leave();
-      }
+      // if (ctx.state.user.status == 0) {
+      //   await ctx.reply("❌ Для отправки смс Вы должны быть ПРО воркером").catch((err) => err);
+      //   return ctx.scene.leave();
+      // }
       await ctx.scene.reply("📲 <b>Введите номер телефона</b>", {
         parse_mode: "HTML",
         reply_markup: Markup.inlineKeyboard([[Markup.callbackButton("Отменить", "cancel")]]),
