@@ -117,10 +117,19 @@ const scene = new WizardScene(
   },
   async (ctx) => {
     try {
-      if (!ctx.message?.text) return ctx.wizard.prevStep();
-      if (parseInt(ctx.message.text) == NaN) return ctx.wizard.prevStep();
+      if (!ctx.message?.text) {
+        await ctx.replyOrEdit("❌ <b>Ошибка. Введите только число!</b>", { parse_mode: "HTML" }).catch((err) => err);
+        return ctx.wizard.prevStep();
+      }
+      if (parseInt(ctx.message.text) == NaN) {
+        await ctx.replyOrEdit("❌ <b>Ошибка. Введите только число!</b>", { parse_mode: "HTML" }).catch((err) => err);
+        return ctx.wizard.prevStep();
+      }
+      if (parseInt(ctx.message.text) > ctx.scene.state.data.templates.length - 1 || parseInt(ctx.message.text) <= 0) {
+        await ctx.replyOrEdit("❌ <b>Ошибка. Такого шаблона нет!</b>", { parse_mode: "HTML" }).catch((err) => err);
+        return ctx.wizard.prevStep();
+      }
       const templateNumber = parseInt(ctx.message.text) - 1;
-      if (templateNumber > ctx.scene.state.data.templates.length - 1 || templateNumber <= 0) return ctx.wizard.prevStep();
 
       await ctx.scene.reply("⏳ <b>Отправляем СМС...</b>", {
         parse_mode: "HTML",
