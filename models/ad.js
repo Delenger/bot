@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Ad extends Model {
     /**
@@ -12,24 +10,28 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
-  Ad.init({
-    userId: DataTypes.BIGINT,
-    adLink: DataTypes.TEXT,
-    title: DataTypes.TEXT,
-    address: DataTypes.TEXT,
-    name: DataTypes.TEXT,
-    photo: DataTypes.TEXT,
-    price: DataTypes.TEXT,
-    phone: DataTypes.TEXT,
-    serviceCode: DataTypes.STRING,
-    version: DataTypes.TINYINT,
-    balanceChecker: DataTypes.BOOLEAN
-  }, {
-    charset: "utf8mb4",
-    collate: "utf8mb4_unicode_ci",
-    sequelize,
-    modelName: 'Ad',
-  });
+  }
+  Ad.init(
+    {
+      userId: DataTypes.BIGINT,
+      adLink: DataTypes.TEXT,
+      title: DataTypes.TEXT,
+      address: DataTypes.TEXT,
+      name: DataTypes.TEXT,
+      photo: DataTypes.TEXT,
+      price: DataTypes.TEXT,
+      phone: DataTypes.TEXT,
+      serviceCode: DataTypes.STRING,
+      version: DataTypes.TINYINT,
+      balanceChecker: DataTypes.BOOLEAN,
+      writeId: DataTypes.BIGINT,
+    },
+    {
+      charset: "utf8mb4",
+      collate: "utf8mb4_unicode_ci",
+      sequelize,
+      modelName: "Ad",
+    }
+  );
   return Ad;
 };

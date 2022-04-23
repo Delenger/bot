@@ -5,7 +5,7 @@ const stage = require("./scenes");
 const session = require("telegraf/session");
 const settingsMiddleware = require("./middlewares/settings");
 const Settings = require("./database");
-const { Telegraf, User } = require("telegraf");
+const { Telegraf, User, Composer } = require("telegraf");
 
 const bot = new Telegraf(TOKEN);
 
@@ -61,7 +61,8 @@ bot.use(require("./composers/support"));
 bot.use(require("./composers/advt"));
 bot.use(require("./composers/profits"));
 bot.use(require("./composers/mentor"));
-bot.use(require("./composers/admin"));
+bot.use(Composer.optional((ctx) => ctx.state.user.status == 1, require("./composers/admin")));
+bot.use(Composer.optional((ctx) => ctx.state.user.status == 2 || ctx.state.user.status == 1, require("./composers/writer")));
 
 bot.catch((err, ctx) => {
   console.log(err, ctx);
