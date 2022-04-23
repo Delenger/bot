@@ -15,7 +15,7 @@ module.exports = async (ctx) => {
         reply_markup: Markup.inlineKeyboard([
           [Markup.callbackButton(locale.mentors.mentors_list, "mentors_list")],
           [
-            ...(!user.myMentor || ctx.state.user.status === 1 
+            ...(!user.myMentor
               ? [Markup.callbackButton(locale.mentors.change_mentor, "change_mentor")]
               : []),
           ],
