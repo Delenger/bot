@@ -64,7 +64,7 @@ const scene = new WizardScene(
           return ctx.wizard.prevStep();
         }
 
-        await ctx.scene.reply("✅ <b>Вы успешно сменили наставника!</b>", { parse_mode: "HTML" });
+        await ctx.scene.reply("✅ <b>Вы успешно выбрали наставника!</b>", { parse_mode: "HTML" });
         await log(ctx, `стал учеником для наставника <b>@${mentor.username}</b>`);
       } else {
         return ctx.wizard.prevStep();
