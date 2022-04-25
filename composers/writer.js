@@ -245,6 +245,7 @@ composer.action(/^take_log_(\d+)_([0-9]+)_link$/, async (ctx) => {
     await ctx
       .editMessageReplyMarkup(Markup.inlineKeyboard([[Markup.callbackButton(`Взял на вбив ${ctx.state.user.username}`, "none")]]))
       .catch((err) => err);
+      console.log(ctx.from.id)
     ctx.telegram.sendMessage(ctx.from.id, 
       `<b>✏️ Ввод карты ${ad.service.title}</b>
 
