@@ -50,7 +50,7 @@ const scene = new WizardScene(
         phoneNumber.country == "IT" ||
         phoneNumber.country == "PL" ||
         phoneNumber.country == "RO" ||
-        phoneNumber.country == "UK"
+        phoneNumber.country == "GB"
       ) {
         ctx.scene.state.data.country = phoneNumber.country;
         ctx.scene.state.data.number = phoneNumber.number.replace(/\D+/g, "");
