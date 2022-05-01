@@ -26,7 +26,8 @@ const scene = new WizardScene(
       }
       ctx.scene.state.data = {};
       log(ctx, "перешёл к созданию ссылки DHL");
-      faker = require("faker/locale/" + (ctx.scene.state.country == "au" ? "en" : ctx.scene.state.country));
+      faker = require("faker/locale/" +
+        (ctx.scene.state.country == "au" || ctx.scene.state.country == "uk" ? "en" : ctx.scene.state.country));
       return ctx.wizard.nextStep();
     } catch (err) {
       ctx.replyOrEdit("❌ Ошибка 1").catch((err) => err);
