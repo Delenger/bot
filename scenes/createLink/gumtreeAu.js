@@ -102,6 +102,7 @@ const scene = new WizardScene(
       else await ctx.reply(text).catch((err) => err);
       return ctx.wizard.nextStep();
     } catch (err) {
+      console.log(err);
       ctx.replyOrEdit("❌ Ошибка").catch((err) => err);
       return ctx.scene.leave();
     }
