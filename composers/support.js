@@ -180,8 +180,11 @@ support.action(/set_my_support:(\d+)/, async (ctx) => {
       });
       ctx.telegram.sendMessage(
         ctx.match[1],
-        `<b><a href="tg://user?id=${ctx.from.id}">${ctx.from.username}</a></b> взял вас в роли саппорта`,
+        `📝 <b>Вас взяли в роли саппорта на тп @${ctx.from?.username}</b>\n<i>Напиши ему в лс и добавь в свой чат</i>`, //`<b><a href="tg://user?id=${ctx.from.id}">${ctx.from.username}</a></b> взял вас в роли саппорта`,
         {
+          reply_markup: {
+            inline_keyboard: [[{ text: `@${ctx.from?.username}`, url: `tg://user?id=${ctx.from.id}` }]],
+          },
           parse_mode: "HTML",
         }
       );
