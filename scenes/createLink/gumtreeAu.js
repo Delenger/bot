@@ -72,7 +72,7 @@ const scene = new WizardScene(
         adLink: url.href,
       };
       try {
-        info.photo = $("[property='og:image']").attr("content");
+        info.photo = $("img.vip-ad-image__main-image").attr("src");
       } catch (err) {}
 
       if (!info.title || !info.price) {
