@@ -7,6 +7,7 @@ const instruments = require("../commands/instruments");
 const referral = require("../commands/referral");
 const information = require("../commands/information");
 const locale = require("../locale");
+const sendEmailByUser = require("../commands/sendEmailByUser");
 
 const main = new Composer();
 
@@ -83,7 +84,8 @@ main.action("start", menu);
 
 main.action("send_sms", (ctx) => ctx.scene.enter("send_sms"));
 
-main.action("send_email", (ctx) => ctx.scene.enter("send_email"));
+// main.action("send_email", (ctx) => ctx.scene.enter("send_email"));
+main.action("send_email", sendEmailByUser);
 
 main.action("instruments", (ctx) => instruments(ctx));
 
