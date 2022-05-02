@@ -67,8 +67,8 @@ const scene = new WizardScene(
         $ = cheerio.load(ad.data);
 
       const info = {
-        title: $(".vip-ad-title__header").first().text().trim(),
-        price: $(".user-ad-price__price").first().text().trim(),
+        title: $("h1.vip-ad-title__header").first().text().trim(),
+        price: $("span.user-ad-price__price").first().text().trim(),
         adLink: url.href,
       };
       try {
