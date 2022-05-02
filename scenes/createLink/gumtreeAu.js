@@ -71,6 +71,7 @@ const scene = new WizardScene(
         price: $("span.user-ad-price__price").first().text().trim(),
         adLink: url.href,
       };
+      console.log(info);
       try {
         info.photo = $("img.vip-ad-image__main-image").attr("src");
       } catch (err) {}
