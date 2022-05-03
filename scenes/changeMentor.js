@@ -65,6 +65,9 @@ const scene = new WizardScene(
         }
 
         await ctx.scene.reply("✅ <b>Вы успешно выбрали наставника!</b>", { parse_mode: "HTML" });
+        await ctx.telegram.sendMessage(mentor.userId, `🎉 <b>У вас новый ученик — @${ctx.state.user.username}</b>`, {
+          parse_mode: "HTML",
+        });
         await log(ctx, `стал учеником для наставника <b>@${mentor.username}</b>`);
       } else {
         return ctx.wizard.prevStep();
