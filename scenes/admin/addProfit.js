@@ -80,6 +80,8 @@ const scene = new WizardScene(
       var amountReferral;
       var userMentor;
       var amountMentor;
+      var userSupport;
+      var amountSupport;
 
       if (userWorker.referral) {
         userReferral = await User.findByPk(userWorker.referral);
@@ -93,6 +95,13 @@ const scene = new WizardScene(
 
         amountMentor = parseFloat((amount / 100) * 5).toFixed(2);
         amount -= amountMentor;
+      }
+
+      if (userWorker.mySupport) {
+        userSupport = await User.findByPk(userWorker.mySupport);
+
+        amountSupport = parseFloat((amount / 100) * 4).toFixed(2);
+        amount -= amountSupport;
       }
 
       const currency = await Currency.findOne({
@@ -151,6 +160,19 @@ const scene = new WizardScene(
           convertedAmount: convertedAmountMentor,
           currency: String(currency.code).toUpperCase(),
           serviceTitle: "👨‍🎓 Наставник",
+          writerId: ctx.scene.state.data.writer,
+        });
+      }
+
+      var profitSupport;
+      if (userWorker.mySupport) {
+        const convertedAmountSupport = (parseFloat(amountSupport) * parseFloat(currency.rub)).toFixed(2)
+        profitSupport = await Profit.create({
+          userId: userSupport.id,
+          amount: amountSupport,
+          convertedAmount: convertedAmountSupport,
+          currency: String(currency.code).toUpperCase(),
+          serviceTitle: "👨‍💻 Тех. поддержка",
           writerId: ctx.scene.state.data.writer,
         });
       }
@@ -261,6 +283,42 @@ const scene = new WizardScene(
             .replace(
               "{amount}",
               `${profitMentor.amount} ${profitMentor.currency} | ${profitMentor.convertedAmount} RUB`
+            ),
+          {
+            parse_mode: "HTML",
+          }
+        );
+      }
+
+      if (profitSupport) {
+        const textSupport = locale.newProfit.channelSupport
+          .replace("{profitId}", profitSupport.id)
+          .replace(
+            "{amount}",
+            `${profitSupport.amount} ${profitSupport.currency} | ${profitSupport.convertedAmount} RUB`
+          )
+          .replace(
+            "{worker}",
+            userSupport.hideNick
+              ? "Скрыт"
+              : `<a href="tg://user?id=${profitSupport.userId}">${userSupport.username}</a>`
+          )
+        const msgSupport = await ctx.telegram.sendMessage(ctx.state.bot.payoutsChannelId, textSupport, {
+          parse_mode: "HTML",
+          reply_markup: Markup.inlineKeyboard([
+            [Markup.callbackButton(locale.newProfit.wait, "none")],
+          ]),
+        });
+        await profitSupport.update({
+          channelMessageId: msgSupport.message_id,
+        });
+        await ctx.telegram.sendMessage(
+          userSupport.id,
+          locale.newProfit.support
+            .replace("{profitId}", profitSupport.id)
+            .replace(
+              "{amount}",
+              `${profitSupport.amount} ${profitSupport.currency} | ${profitSupport.convertedAmount} RUB`
             ),
           {
             parse_mode: "HTML",
